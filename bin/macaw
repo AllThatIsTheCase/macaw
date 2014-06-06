@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+require 'pp'
+
+def error(msg)
+  puts msg
+  exit 1
+end
+
+error("No filename to process") if ARGV.size == 0
+error("Expected exactly one filename to process #{ARGV.inspect}") if ARGV.size != 1
+error("#{ARGV[0].inspect} does not exist") if !File.exists?(ARGV[0])
+
+CONFIG = {
+  arara: File.join(Dir.home, 'araraconfig.yaml'),
+  macaw: File.join(Dir.home, 'macawconfig.yaml')
+}
+CONFIG.each_pair{|k, v|
+  if File.exists?(v)
+    CONFIG[k] = YAML.load_file(v)
+  elsif File.exists?(File.join(File.dirname(v), ".#{File.basename(v)}"))
+    CONFIG[k] = YAML.load_file(File.join(File.dirname(v), ".#{File.basename(v)}"))
+  else
+    CONFIG.delete(k)
+  end
+}
+
+module Macaw
+  def self.load(paths, klass)
+    paths.each{|path|
+      Dir[File.join(path, '*.yaml')].each{|rule|
+        begin
+          klass.new(YAML.load_file(rule))
+        rescue => e
+          puts "Not a valid #{klass.name} rule file: #{rule} (#{e})"
+        end
+      }
+    }
+  end
+
+  class Arara
+    @@rules = {}
+    def initialize(rules)
+      throw 'No identifier' unless rules['identifier']
+      @@rules[rules['identifier']] = self
+    end
+
+    def self.load
+      ::Macaw::load((CONFIG[:arara] && CONFIG[:arara]['paths']) || [], Arara)
+    end
+  end
+
+  class Macaw
+    @@rules = {}
+    def initialize(rules)
+      throw 'No identifier' unless rules['id']
+      @@rules[rules['id']] = self
+    end
+
+    def self.load
+      ::Macaw::load((CONFIG[:macaw] && CONFIG[:macaw]['paths']) || [], Macaw)
+    end
+  end
+end
+
+Macaw::Arara.load
+Macaw::Macaw.load
+
+IO.readlines(ARGV[0]).each{|line|
+  #if line =~ /^% arara: /
+}
