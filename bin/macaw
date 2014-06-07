@@ -2,6 +2,9 @@
 
 require 'yaml'
 require 'pp'
+require 'macaw'
+require 'json/pure'
+require 'shellwords'
 
 def error(msg)
   puts msg
@@ -10,63 +13,87 @@ end
 
 error("No filename to process") if ARGV.size == 0
 error("Expected exactly one filename to process #{ARGV.inspect}") if ARGV.size != 1
-error("#{ARGV[0].inspect} does not exist") if !File.exists?(ARGV[0])
+if File.file?(ARGV[0])
+  TEX = ARGV[0]
+elsif File.file?(ARGV[0] + '.tex')
+  TEX = ARGV[0] + '.tex'
+else
+  error("#{ARGV[0].inspect} does not exist") if !File.exists?(ARGV[0])
+end
 
-CONFIG = {
-  arara: File.join(Dir.home, 'araraconfig.yaml'),
-  macaw: File.join(Dir.home, 'macawconfig.yaml')
-}
-CONFIG.each_pair{|k, v|
-  if File.exists?(v)
-    CONFIG[k] = YAML.load_file(v)
-  elsif File.exists?(File.join(File.dirname(v), ".#{File.basename(v)}"))
-    CONFIG[k] = YAML.load_file(File.join(File.dirname(v), ".#{File.basename(v)}"))
-  else
-    CONFIG.delete(k)
-  end
-}
+CONFIGFILE = [File.join(Dir.home, 'araraconfig.yaml'), File.join(Dir.home, '.araraconfig.yaml')].detect{|config| File.file?(config) }
+CONFIG = CONFIGFILE ? YAML.load_file(CONFIGFILE) : {}
 
-module Macaw
-  def self.load(paths, klass)
-    paths.each{|path|
-      Dir[File.join(path, '*.yaml')].each{|rule|
-        begin
-          klass.new(YAML.load_file(rule))
-        rescue => e
-          puts "Not a valid #{klass.name} rule file: #{rule} (#{e})"
-        end
-      }
-    }
-  end
+class JSON::Pure::Parser
+  IDENTIFIER = /[^:\s\\",{}\[\]]+/i
+  alias :parse_quoted_string :parse_string
 
-  class Arara
-    @@rules = {}
-    def initialize(rules)
-      throw 'No identifier' unless rules['identifier']
-      @@rules[rules['identifier']] = self
-    end
-
-    def self.load
-      ::Macaw::load((CONFIG[:arara] && CONFIG[:arara]['paths']) || [], Arara)
-    end
-  end
-
-  class Macaw
-    @@rules = {}
-    def initialize(rules)
-      throw 'No identifier' unless rules['id']
-      @@rules[rules['id']] = self
-    end
-
-    def self.load
-      ::Macaw::load((CONFIG[:macaw] && CONFIG[:macaw]['paths']) || [], Macaw)
+  def parse_string
+    if (!match?(/true|false/i) || match?(/(true|false)#{IDENTIFIER}/i)) && match?(IDENTIFIER)
+      scan(IDENTIFIER)
+    else
+      parse_quoted_string
     end
   end
 end
 
-Macaw::Arara.load
-Macaw::Macaw.load
+class Macaw
+  def initialize(tex)
+    @file = tex
+    @base = File.basename(@file, File.extname(@file))
+  end
 
-IO.readlines(ARGV[0]).each{|line|
-  #if line =~ /^% arara: /
-}
+  def isTrue(p)
+    return false if p.nil?
+    return p if p == false || p == true
+    return true if ['yes', 'true'].include?(p.downcase)
+    return false
+  end
+
+  def self.run(file)
+    Macaw.load_rules
+    macaw = Macaw.new(file)
+    IO.readlines(file).each{|line|
+      next unless line =~ /^% arara: /
+      line.strip!
+      line.sub!(/^%\s+arara\s*:\s*/, '')
+      line = line.split(':', 2).collect{|v| v.strip}
+
+      cmd = line[0]
+      next if cmd == ''
+
+      param = nil
+      begin
+        param = Macaw.intern_keys(JSON.parse(line[1])) if line[1]
+      rescue => e
+        error("cannot parse command #{line.join(': ').inspect}: #{e}")
+      end
+
+      macaw.send(cmd.intern, OpenStruct.new(param || {}))
+    }
+  end
+
+  def self.system(cmd)
+    puts cmd
+    output = `#{cmd}`
+    puts output
+    return output if $?.to_i == 0
+    throw $?.to_s
+  end
+
+  def self.load_rules
+    CONFIG['paths'].each{|path| puts path; require_all path} if CONFIG['paths']
+  end
+
+  def self.intern_keys(obj)
+    if obj.is_a?(Hash)
+      return Hash[*(obj.collect{|k, v| [k.intern, intern_keys(v)] }.flatten(1))]
+    elsif obj.is_a?(Array)
+      return obj.collect{|v| intern_keys(v) }
+    else
+      return obj
+    end
+  end
+end
+
+Macaw.run(TEX)

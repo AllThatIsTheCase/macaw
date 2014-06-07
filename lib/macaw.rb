@@ -1,7 +1,3 @@
-require 'open-uri'
-require 'csv'
-require 'msgpack'
-require 'nokogiri'
+require 'require_all'
 
-module Macaw
-end
+require_all File.join(File.dirname(__FILE__), 'macaw', 'rules')
