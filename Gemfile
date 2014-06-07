@@ -8,3 +8,4 @@ gemspec
 
 gem 'json_pure'
 gem 'require_all'
+gem 'os'

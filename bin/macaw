@@ -62,6 +62,8 @@ class Macaw
       cmd = line[0]
       next if cmd == ''
 
+      error('Halted on user request' if cmd == 'halt'
+
       param = nil
       begin
         param = JSON.parse(line[1]) if line[1]
