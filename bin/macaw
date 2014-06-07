@@ -64,7 +64,7 @@ class Macaw
 
       param = nil
       begin
-        param = Macaw.intern_keys(JSON.parse(line[1])) if line[1]
+        param = JSON.parse(line[1]) if line[1]
       rescue => e
         error("cannot parse command #{line.join(': ').inspect}: #{e}")
       end
@@ -78,21 +78,11 @@ class Macaw
     output = `#{cmd}`
     puts output
     return output if $?.to_i == 0
-    throw $?.to_s
+    throw "#{cmd}: #{$?}"
   end
 
   def self.load_rules
     CONFIG['paths'].each{|path| puts path; require_all path} if CONFIG['paths']
-  end
-
-  def self.intern_keys(obj)
-    if obj.is_a?(Hash)
-      return Hash[*(obj.collect{|k, v| [k.intern, intern_keys(v)] }.flatten(1))]
-    elsif obj.is_a?(Array)
-      return obj.collect{|v| intern_keys(v) }
-    else
-      return obj
-    end
   end
 end
 
