@@ -4,6 +4,7 @@ require 'yaml'
 require 'pp'
 require 'macaw'
 require 'json/pure'
+require 'os'
 require 'shellwords'
 
 def error(msg)
@@ -26,7 +27,7 @@ CONFIG = CONFIGFILE ? YAML.load_file(CONFIGFILE) : {}
 
 class String
   def ~
-    if os.windows?
+    if OS.windows?
       return '"' + self.gsub('"', '""') + '"'
     else
       return self.shellescape
@@ -93,14 +94,6 @@ class Macaw
 
       macaw.send(cmd, *accept.collect{|k, v| params[v.to_s]})
     }
-  end
-
-  def !(value)
-    if os.windows?
-      return '"' + value.to_s.gsub('"', '""') + '"'
-    else
-      return value.to_s.shellescape
-    end
   end
 
   def self.system(cmd)

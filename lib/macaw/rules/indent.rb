@@ -20,7 +20,7 @@ require 'os'
 # Note: output will take priority above overwrite
 class Macaw
   def indent(overwrite=nil, silent=nil, trace=nil, localSettings=nil, output=nil, onlyDefault=nil, cruft=nil)
-    cmd = ["latexindent.#{os.windows? ? 'exe' : 'pl'}"]
+    cmd = ["latexindent.#{OS.windows? ? 'exe' : 'pl'}"]
     cmd << '-s' if silent
     cmd << '-t' if trace
     cmd << '-l' if localSettings
