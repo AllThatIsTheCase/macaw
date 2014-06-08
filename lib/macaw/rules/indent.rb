@@ -26,7 +26,7 @@ class Macaw
     cmd << '-l' if localSettings
     cmd << "-c=#{cruft.shellescape}" if cruft
     cmd << '-w' if overwrite
-    cmd << '-d' onlyDefault
+    cmd << '-d' if onlyDefault
     cmd << "-o #{output.shellescape}" if output
     cmd << @file.shellescape
     cmd << output.shellescape if output
