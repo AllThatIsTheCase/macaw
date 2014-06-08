@@ -58,7 +58,7 @@ class Macaw
       cmd = data[0]
       next if cmd == ''
 
-      error('Halted on user request' if cmd == 'halt'
+      error 'Halted on user request' if cmd == 'halt'
 
       params = {}
       begin
@@ -78,10 +78,10 @@ class Macaw
       missing = required - params.keys.collect{|k| k.intern}
       error "#{line}: missing required parameter#{missing.size > 1 ? 's' : ''}: #{missing.inspect}" if missing.size > 0
 
-      unexpected = params.keys.collect{|k| k.intern} - accept.keys
+      unexpected = params.keys.collect{|k| k.intern} - (required + optional)
       error "#{line}: unexpected parameter#{unexpected.size > 1 ? 's' : ''}: #{unexpected.inspect}" if unexpected.size > 0
 
-      macaw.send(cmd, accept.collect{|k, v| params[v.to_s]}
+      macaw.send(cmd, *accept.collect{|k, v| params[v.to_s]})
     }
   end
 
