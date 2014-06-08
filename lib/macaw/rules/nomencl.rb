@@ -3,13 +3,13 @@
 # last edited by: Paulo Cereda
 # requires arara 3.0+
 class Macaw
-  rule :nomencl => opt: %i{style options}, req: [] do |parameters|
-    parameters.style ||= nomencl
+  def nomencl(style=nil, options=nil)
+    style ||= nomencl
 
     cmd = ['makeindex']
-    cmd << parameter.options
+    cmd << options
     cmd << "#{@base}.nlo".shellescape
-    cmd << '-s ' + "#{parameters.style}.ist".shellescape if parameters.style
+    cmd << '-s ' + "#{style}.ist".shellescape if style
     cmd << '-o ' + "#{@base}.nls".shellescape
 
     Macaw.system cmd

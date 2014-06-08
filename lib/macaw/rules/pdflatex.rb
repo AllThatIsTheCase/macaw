@@ -3,13 +3,13 @@
 # last edited by: Paulo Cereda
 # requires arara 3.0+
 class Macaw
-  rule :pdflatex => opt: %i{action shell synctex draft options}, req: [] do |parameters|
+  def pdflatex(action=nil, shell=nil, synctex=nil, draft=nil, options=nil)
     cmd = ['pdflatex']
-    cmd << "--interaction=#{parameters.action}" if parameters.action
-    cmd << = '--draftmode' if parameters.draft
-    cmd << parameters.shell ? '--shell-escape' : '--no-shell-escape'
-    cmd << "--synctex=#{parameters.synctex ? 1 : 0}"
-    cmd << params.options
+    cmd << "--interaction=#{action}" if action
+    cmd << = '--draftmode' if draft
+    cmd << shell ? '--shell-escape' : '--no-shell-escape'
+    cmd << "--synctex=#{synctex ? 1 : 0}"
+    cmd << options
     cmd << @file.shellescape
 
     Macaw.system cmd

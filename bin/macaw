@@ -46,48 +46,6 @@ class Macaw
     @base = File.basename(@file, File.extname(@file))
   end
 
-  cattr_accessor :metadata
-  def self.rule(*args, &block)
-    Macaw.metadata ||= {}
-
-    if args.is_a?(Hash) && args.size == 1
-      name = args.keys[0]
-      args = args[name]
-    elsif args.is_a?(Symbol)
-      name = args
-      args = nil
-    else
-      error("unexpected rule definition #{args.inspect}"
-    end
-
-    name.intern!
-
-    if args.nil?
-      Macaw.metadata[name] = {}
-    elsif args.is_a?(Array)
-      Macaw.metadata[name] = {req: args}
-    elsif args.is_a?(Symbol)
-      Macaw.metadata[name] = {req: [args]}
-    elsif args.is_a?(Hash) && (args.keys - [:opt, :req]).empty?
-      Macaw.metadata[name] = args
-    elsif args.is_a?(Hash) && (args.values.uniq - [:opt, :req, true, false]).empty?
-      Macaw.metadata[name] = {
-        req: args.collect{|k,v| v == :req || v == true}.collect{|k, v| k},
-        opt: args.collect{|k,v| v == :opt || v == false}.collect{|k, v| k},
-      }
-      Macaw.metadata[name].delete(:req) if Macaw.metadata[name][:req].empty?
-      Macaw.metadata[name].delete(:opt) if Macaw.metadata[name][:opt].empty?
-    else
-      error("rule #{name.inspect} has unexpected arguments specification #{args.inspect}"
-    end
-
-    [:req, :opt].each{|p|
-      Macaw.metadata[name][p] = Macaw.metadata[name][p].collect{|k| k.intern} if Macaw.metadata[name][p]
-    }
-
-    define_method(name, block)
-  end
-
   def self.run(file)
     Macaw.load_rules
     macaw = Macaw.new(file)
@@ -113,16 +71,17 @@ class Macaw
 
       error "no such rule #{cmd}" unless macaw.respond_to?(cmd)
 
-      if Macaw.metadata[cmd][:req]
-        missing = Macaw.metadata[cmd][:req] - params.keys.collect{|k| k.intern}
-        error("#{line.inspect}: missing required parameters #{missing.inspect}" unless missing.empty?
-      end
-      if Macaw.metadata[cmd][:opt]
-        unexpected = params.keys.collect{|k| k.intern} - [Macaw.metadata[cmd][:req], Macaw.metadata[cmd][:opt].compact.flatten
-        error("#{line.inspect}: unexpected parameters #{unexpected.inspect}" unless unexpected.empty?
-      end
+      accept = Macaw.instance_method(cmd).parameters
+      required = accept.collect{|k, v| k == :req ? v : nil}.compact
+      optional = accept.collect{|k, v| k != :req ? v : nil}.compact
 
-      macaw.send(cmd, OpenStruct.new(params))
+      missing = required - params.keys.collect{|k| k.intern}
+      error "#{line}: missing required parameter#{missing.size > 1 ? 's' : ''}: #{missing.inspect}" if missing.size > 0
+
+      unexpected = params.keys.collect{|k| k.intern} - accept.keys
+      error "#{line}: unexpected parameter#{unexpected.size > 1 ? 's' : ''}: #{unexpected.inspect}" if unexpected.size > 0
+
+      macaw.send(cmd, accept.collect{|k, v| params[v.to_s]}
     }
   end
 

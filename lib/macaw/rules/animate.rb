@@ -16,10 +16,10 @@
 # which will output myfile.gif
 #
 class Macaw
-  rule :animate => req: [], opt: %i{delay loop density} do |parameters|
-    parameters.delay ||= 10
-    parameters.loop ||= 0
-    parameters.density ||= 300
+  def animate(delay=nil, loop=nil, density=nil)
+    delay ||= 10
+    loop ||= 0
+    density ||= 300
 
     Macaw.system "convert -delay #{delay} -loop #{loop} -density #{density} #{"#{@base}.pdf".shellescape} #{"#{@base}.gif".shellescape}"
   end

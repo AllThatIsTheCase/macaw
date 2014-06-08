@@ -2,13 +2,13 @@
 # author: Brent Longborough
 # requires arara 3.0+
 class Macaw
-  rule :pdflatexmk => opt: %i{action shell synctex options style}, req: [] do |parameters|
+  def pdflatexmk(action=nil, shell=nil, synctex=nil, options=nil, style=nil)
     cmd = ["latexmk -e '$pdflatex=q/pdflatex%O%S/'"]
-    cmd << "--interaction=#{parameters.action}" if parameters.action
-    cmd << "--synctex=#{parameters.synctex ? 1 : 0}"
-    cmd << "--#{parameters.shell ? '' : 'no-'}shell-escape"
-    cmd << parameters.options
-    cmd << "-e '$makeindex=q/makeindex %O -s #{"#{parameters.style}.ist".shellescape} -o %D %S/'" if parameters.style
+    cmd << "--interaction=#{action}" if action
+    cmd << "--synctex=#{synctex ? 1 : 0}"
+    cmd << "--#{shell ? '' : 'no-'}shell-escape"
+    cmd << options
+    cmd << "-e '$makeindex=q/makeindex %O -s #{"#{style}.ist".shellescape} -o %D %S/'" if style
     cmd << '-pdf'
     cmd << @file.shellescape
 

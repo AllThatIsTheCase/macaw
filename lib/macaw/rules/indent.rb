@@ -19,17 +19,17 @@ require 'os'
 # 
 # Note: output will take priority above overwrite
 class Macaw
-  rule :indent => opt: %i{overwrite silent trace localSettings output onlyDefault cruft}, req: [] do |parameters|
+  def indent(overwrite=nil, silent=nil, trace=nil, localSettings=nil, output=nil, onlyDefault=nil, cruft=nil)
     cmd = ["latexindent.#{os.windows? ? 'exe' : 'pl'}"]
-    cmd << '-s' if parameters.silent
-    cmd << '-t' if parameters.trace
-    cmd << '-l' if parameters.localSettings
-    cmd << "-c=#{parameters.cruft.shellescape}" if parameters.cruft
-    cmd << '-w' if parameters.overwrite
-    cmd << '-d' parameters.onlyDefault
-    cmd << "-o #{parameters.output.shellescape}" if parameters.output
+    cmd << '-s' if silent
+    cmd << '-t' if trace
+    cmd << '-l' if localSettings
+    cmd << "-c=#{cruft.shellescape}" if cruft
+    cmd << '-w' if overwrite
+    cmd << '-d' onlyDefault
+    cmd << "-o #{output.shellescape}" if output
     cmd << @file.shellescape
-    cmd << parameters.output.shellescape if parameters.output
+    cmd << output.shellescape if output
 
     Macaw.system cmd
   end

@@ -2,11 +2,11 @@
 # author: Brent Longborough
 # requires arara 3.0+
 class Macaw
-  rule :lmkclean => req: [], opt: %i{include} do |parameters|
-    parameters.include ||= '-c'
+  def lmkclean(include=nil)
+    include ||= '-c'
 
     cmd = ['latexmk']
-    cmd << parameters.include.downcase if parameters.include && %w{all -c}.include(parameters.include.downcase)
+    cmd << include.downcase if include && %w{all -c}.include(include.downcase)
     cmd << @file.shellescape
     Macaw.system cmd
   end
