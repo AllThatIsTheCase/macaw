@@ -4,11 +4,14 @@
 # requires arara 3.0+
 class Macaw
   def pdflatex(parameters)
-    action  = parameters.action ? "--interaction=#{parameters.action}" : ''
-    shell = isTrue(parameters.shell) ? "--shell-escape" : "--no-shell-escape"
-    synctex = isTrue(parameters.synctex) ? "--synctex=1" : "--synctex=0"
-    draft = isTrue(parameters.draft) ? "--draftmode" : ''
+    cmd = ['pdflatex']
+    cmd << "--interaction=#{parameters.action}" if parameters.action
+    cmd << = '--draftmode' if parameters.draft
+    cmd << parameters.shell ? '--shell-escape' : '--no-shell-escape'
+    cmd << "--synctex=#{parameters.synctex ? 1 : 0}"
+    cmd << params.options
+    cmd << @file.shellescape
 
-    Macaw.system("pdflatex #{action} #{draft} #{shell} #{synctex} #{parameters.options} #{@file.shellescape}")
+    Macaw.system cmd
   end
 end

@@ -3,6 +3,6 @@
 # requires arara 3.0+
 class Macaw
   def biber(parameters)
-    Macaw.system("biber #{parameters.options} #{@base.shellescape}")
+    Macaw.system "biber #{parameters.options} #{@base.shellescape}"
   end
 end

@@ -4,13 +4,14 @@
 # requires arara 3.0+
 class Macaw
   def latex(parameters)
-    params = ''
-    params << " --interaction=#{parameters.action}" if parameters.action
-    params << ' --draftmode' if parameters.draft
-    params << isTrue(parameters.shell) ? ' --shell-escape' : ' --no-shell-escape'
-    params << " --synctex=#{parameters.synctex ? 1 : 0}"
-    params << " #{parameters.options}"
-    params << " #{@file.shellescape}"
-    Macaw.system("latex #{params}")
+    cmd = ['latex']
+    cmd << "--interaction=#{parameters.action}" if parameters.action
+    cmd << '--draftmode' if parameters.draft
+    cmd << parameters.shell ? '--shell-escape' : '--no-shell-escape'
+    cmd << "--synctex=#{parameters.synctex ? 1 : 0}"
+    cmd << parameters.options.to_s
+    cmd << @file.shellescape
+
+    Macaw.system cmd
   end
 end

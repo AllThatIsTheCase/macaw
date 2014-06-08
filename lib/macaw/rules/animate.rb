@@ -21,6 +21,6 @@ class Macaw
     parameters.loop ||= 0
     parameters.density ||= 300
 
-    Macaw.system("convert -delay #{delay} -loop #{loop} -density #{density} #{(@base + '.pdf').shellescape} #{(@base + '.gif').shellescape}"
+    Macaw.system "convert -delay #{delay} -loop #{loop} -density #{density} #{"#{@base}.pdf".shellescape} #{"#{@base}.gif".shellescape}"
   end
 end

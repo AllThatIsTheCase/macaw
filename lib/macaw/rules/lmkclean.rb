@@ -5,9 +5,9 @@ class Macaw
   def lmkclean(parameters)
     parameters.include ||= '-c'
 
-    params = ''
-    params << " #{parameters.include.downcase}" if parameters.include && %w{all -c}.include(parameters.include.downcase)
-    params << " #{@file.shellescape}"
-    Macaw.system("latexmk #{params}")
+    cmd = ['latexmk']
+    cmd << parameters.include.downcase if parameters.include && %w{all -c}.include(parameters.include.downcase)
+    cmd << @file.shellescape
+    Macaw.system cmd
   end
 end

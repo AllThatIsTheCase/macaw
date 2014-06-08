@@ -20,16 +20,17 @@ require 'os'
 # Note: output will take priority above overwrite
 class Macaw
   def indent(parameters)
-    params = ''
-    params << ' -s' if isTrue(parameters.silent)
-    params << ' -t' if isTrue(parameters.trace)
-    params << ' -l' if isTrue(parameters.localSettings)
-    params << " -c=#{parameters.cruft.shellescape}" if parameters.cruft
-    params << ' -w' if isTrue(parameters.overwrite)
-    params << ' -d' isTrue(parameters.onlyDefault)
-    params << " -o #{parameters.output.shellescape}" if parameters.output
-    params << " #{@file.shellescape}"
-    params << " #{parameters.output.shellescape}" if parameters.output
-    Macaw.system("latexindent.#{os.windows? ? 'exe' : 'pl'} #{params}")
+    cmd = ["latexindent.#{os.windows? ? 'exe' : 'pl'}"]
+    cmd << '-s' if parameters.silent
+    cmd << '-t' if parameters.trace
+    cmd << '-l' if parameters.localSettings
+    cmd << "-c=#{parameters.cruft.shellescape}" if parameters.cruft
+    cmd << '-w' if parameters.overwrite
+    cmd << '-d' parameters.onlyDefault
+    cmd << "-o #{parameters.output.shellescape}" if parameters.output
+    cmd << @file.shellescape
+    cmd << parameters.output.shellescape if parameters.output
+
+    Macaw.system cmd
   end
 end

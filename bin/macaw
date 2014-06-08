@@ -29,11 +29,14 @@ class JSON::Pure::Parser
   alias :parse_quoted_string :parse_string
 
   def parse_string
-    if (!match?(/true|false/i) || match?(/(true|false)#{IDENTIFIER}/i)) && match?(IDENTIFIER)
-      scan(IDENTIFIER)
-    else
-      parse_quoted_string
+    if match?(IDENTIFIER)
+      str = scan(IDENTIFIER)
+      return true if str == 'yes'
+      return false if str == 'no'
+      return str
     end
+
+    return parse_quoted_string
   end
 end
 
@@ -41,13 +44,6 @@ class Macaw
   def initialize(tex)
     @file = tex
     @base = File.basename(@file, File.extname(@file))
-  end
-
-  def isTrue(p)
-    return false if p.nil?
-    return p if p == false || p == true
-    return true if ['yes', 'true'].include?(p.downcase)
-    return false
   end
 
   def self.run(file)
@@ -76,6 +72,7 @@ class Macaw
   end
 
   def self.system(cmd)
+    cmd = cmd.compact.join(' ') if cmd.is_a?(Array)
     puts cmd
     output = `#{cmd}`
     puts output
