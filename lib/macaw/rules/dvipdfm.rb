@@ -2,7 +2,7 @@
 # author: Marco Daniel
 # requires arara 3.0+
 class Macaw
-  def dvipdfmx(parameters)
+  rule :dvipdfm => req: [], opt: %i{options output} do |parameters|
     parameters.output ||= @base
     Macaw.system "dvipdfm #{"#{@base}.dvi".shellescape} -o #{"#{parameters.output}.ps".shellescape} #{parameters.options}"
   end

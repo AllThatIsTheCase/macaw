@@ -2,7 +2,7 @@
 # author: Brent Longborough
 # requires: arara 3.0+
 class Macaw
-  def lualatexmk(parameters)
+  rule :lualatexmk => opt: %i{action shell synctex options style}, req: [] do |parameters|
     cmd = []
     cmd << "latexmk -e '$pdflatex=q/lualatex%O%S/'"
     cmd << "--interaction=#{parameters.action}" if parameters.action

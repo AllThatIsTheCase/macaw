@@ -2,9 +2,7 @@
 # author: Paulo Cereda
 # requires arara 3.0+
 class Macaw
-  def clean(parameters)
-    return unless parameters.files
-    sleep(parameters.wait) if paramaters.wait.to_i != 0
+  rule :clean => req: %{files}, opt: [] do |parameters|
     parameters.files.reject{|f| f.downcase == @file.downcase}.each{|f|
       File.unlink(f)
     }

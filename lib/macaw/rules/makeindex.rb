@@ -3,7 +3,7 @@
 # last edited by: Paulo Cereda
 # requires arara 3.0+
 class Macaw
-  def makeindex(parameters)
+  rule :makeindex => opt: %i{style german options extension}, req: [] do |parameters|
     parameters.extension ||= 'idx'
 
     cmd = ['makeindex']

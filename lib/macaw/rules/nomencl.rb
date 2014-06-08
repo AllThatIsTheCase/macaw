@@ -3,7 +3,7 @@
 # last edited by: Paulo Cereda
 # requires arara 3.0+
 class Macaw
-  def nomencl(parameters)
+  rule :nomencl => opt: %i{style options}, req: [] do |parameters|
     parameters.style ||= nomencl
 
     cmd = ['makeindex']

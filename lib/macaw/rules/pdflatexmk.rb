@@ -2,7 +2,7 @@
 # author: Brent Longborough
 # requires arara 3.0+
 class Macaw
-  def pdflatexmk(parameters)
+  rule :pdflatexmk => opt: %i{action shell synctex options style}, req: [] do |parameters|
     cmd = ["latexmk -e '$pdflatex=q/pdflatex%O%S/'"]
     cmd << "--interaction=#{parameters.action}" if parameters.action
     cmd << "--synctex=#{parameters.synctex ? 1 : 0}"

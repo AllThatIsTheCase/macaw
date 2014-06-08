@@ -3,7 +3,7 @@
 # author: Enrico Gregorio
 # requires arara 3.0+
 class Macaw
-  def frontespizio(parameters)
+  rule :frontespizio => req: [], opt: %i{engine} do |parameters|
     parameters.engine ||= 'pdflatex'
 
     Macaw.system "#{parameters.engine} #{@base.shellescape}"

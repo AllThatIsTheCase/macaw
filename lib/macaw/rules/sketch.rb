@@ -2,7 +2,7 @@
 # author: Sergey Ulyanov
 # requires arara 3.0+
 class Macaw
-  def sketch(parameters)
+  rule :sketch => opt: %i{options}, req: [] do |parameters|
     cmd = ['sketch']
     cmd << parameters.options
     cmd << @file.shellescape

@@ -3,7 +3,7 @@
 # last edited by: Paulo Cereda
 # requires arara 3.0+
 class Macaw
-  def lualatex(parameters)
+  rule :lualatex => opt: %i{action shell synctex draft options}, req: [] do |parameters|
     cmd = ['lualatex']
     cmd << "--interaction=#{parameters.action}" if parameters.action
     cmd << '--draftmode' if parameters.draft

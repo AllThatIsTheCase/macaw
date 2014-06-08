@@ -46,6 +46,48 @@ class Macaw
     @base = File.basename(@file, File.extname(@file))
   end
 
+  cattr_accessor :metadata
+  def self.rule(*args, &block)
+    Macaw.metadata ||= {}
+
+    if args.is_a?(Hash) && args.size == 1
+      name = args.keys[0]
+      args = args[name]
+    elsif args.is_a?(Symbol)
+      name = args
+      args = nil
+    else
+      error("unexpected rule definition #{args.inspect}"
+    end
+
+    name.intern!
+
+    if args.nil?
+      Macaw.metadata[name] = {}
+    elsif args.is_a?(Array)
+      Macaw.metadata[name] = {req: args}
+    elsif args.is_a?(Symbol)
+      Macaw.metadata[name] = {req: [args]}
+    elsif args.is_a?(Hash) && (args.keys - [:opt, :req]).empty?
+      Macaw.metadata[name] = args
+    elsif args.is_a?(Hash) && (args.values.uniq - [:opt, :req, true, false]).empty?
+      Macaw.metadata[name] = {
+        req: args.collect{|k,v| v == :req || v == true}.collect{|k, v| k},
+        opt: args.collect{|k,v| v == :opt || v == false}.collect{|k, v| k},
+      }
+      Macaw.metadata[name].delete(:req) if Macaw.metadata[name][:req].empty?
+      Macaw.metadata[name].delete(:opt) if Macaw.metadata[name][:opt].empty?
+    else
+      error("rule #{name.inspect} has unexpected arguments specification #{args.inspect}"
+    end
+
+    [:req, :opt].each{|p|
+      Macaw.metadata[name][p] = Macaw.metadata[name][p].collect{|k| k.intern} if Macaw.metadata[name][p]
+    }
+
+    define_method(name, block)
+  end
+
   def self.run(file)
     Macaw.load_rules
     macaw = Macaw.new(file)
@@ -53,21 +95,34 @@ class Macaw
       next unless line =~ /^% arara: /
       line.strip!
       line.sub!(/^%\s+arara\s*:\s*/, '')
-      line = line.split(':', 2).collect{|v| v.strip}
+      data = line.split(':', 2).collect{|v| v.strip}
 
-      cmd = line[0]
+      cmd = data[0]
       next if cmd == ''
 
       error('Halted on user request' if cmd == 'halt'
 
-      param = nil
+      params = {}
       begin
-        param = JSON.parse(line[1]) if line[1]
+        params = JSON.parse(data[1]) if data[1]
       rescue => e
-        error("cannot parse command #{line.join(': ').inspect}: #{e}")
+        error("cannot parse command #{line.inspect}: #{e}")
       end
 
-      macaw.send(cmd.intern, OpenStruct.new(param || {}))
+      cmd = cmd.intern
+
+      error "no such rule #{cmd}" unless macaw.respond_to?(cmd)
+
+      if Macaw.metadata[cmd][:req]
+        missing = Macaw.metadata[cmd][:req] - params.keys.collect{|k| k.intern}
+        error("#{line.inspect}: missing required parameters #{missing.inspect}" unless missing.empty?
+      end
+      if Macaw.metadata[cmd][:opt]
+        unexpected = params.keys.collect{|k| k.intern} - [Macaw.metadata[cmd][:req], Macaw.metadata[cmd][:opt].compact.flatten
+        error("#{line.inspect}: unexpected parameters #{unexpected.inspect}" unless unexpected.empty?
+      end
+
+      macaw.send(cmd, OpenStruct.new(params))
     }
   end
 

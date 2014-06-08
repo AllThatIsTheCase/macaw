@@ -2,7 +2,7 @@
 # author: Marco Daniel
 # requres arara 3.0+
 class Macaw
-  def makeglossaries(parameters)
+  rule :makeglossaries => opt: %i{options}, req: [] do |parameters|
     cmd = ['makeglossaries']
     cmd << parameters.options
     cmd << @base.shellescape

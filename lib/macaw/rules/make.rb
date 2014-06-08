@@ -3,7 +3,8 @@
 # last edited by: Paulo Cereda
 # requires arara 3.0+
 class Makaw
-  def make(parameters)
+  rule :make => opt: %i{task}, req: [] do |parameters|
+    parameters.task ||= ''
     Macaw.system "make #{parameters.task.shellescape}"
   end
 end

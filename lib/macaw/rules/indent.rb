@@ -19,7 +19,7 @@ require 'os'
 # 
 # Note: output will take priority above overwrite
 class Macaw
-  def indent(parameters)
+  rule :indent => opt: %i{overwrite silent trace localSettings output onlyDefault cruft}, req: [] do |parameters|
     cmd = ["latexindent.#{os.windows? ? 'exe' : 'pl'}"]
     cmd << '-s' if parameters.silent
     cmd << '-t' if parameters.trace

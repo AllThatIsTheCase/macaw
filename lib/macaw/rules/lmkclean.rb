@@ -2,7 +2,7 @@
 # author: Brent Longborough
 # requires arara 3.0+
 class Macaw
-  def lmkclean(parameters)
+  rule :lmkclean => req: [], opt: %i{include} do |parameters|
     parameters.include ||= '-c'
 
     cmd = ['latexmk']

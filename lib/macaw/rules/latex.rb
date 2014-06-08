@@ -3,7 +3,7 @@
 # last edited by: Paulo Cereda
 # requires arara 3.0+
 class Macaw
-  def latex(parameters)
+  rule :latex => opt: %i{action shell synctex draft options}, req: [] do |parameters|
     cmd = ['latex']
     cmd << "--interaction=#{parameters.action}" if parameters.action
     cmd << '--draftmode' if parameters.draft

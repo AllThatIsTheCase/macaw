@@ -2,7 +2,7 @@
 # author: Marco Daniel
 # requires arara 3.0+
 class Macaw
-  def biber(parameters)
+  rule :biber => opt: %i{options}, req: [] do |parameters|
     Macaw.system "biber #{parameters.options} #{@base.shellescape}"
   end
 end

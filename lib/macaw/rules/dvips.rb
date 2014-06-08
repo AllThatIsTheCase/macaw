@@ -2,7 +2,7 @@
 # author: Marco Daniel
 # requires arara 3.0+
 class Macaw
-  def dvips(parameters)
+  rule :dvips => opt: %i{options output}, opt: [] do |parameters|
     parameters.output ||= @base
     Macaw.system "dvips #{"#{@base}.dvi".shellescape} -o #{"#{parameters.output}.ps".shellescape} #{parameters.options}"
   end

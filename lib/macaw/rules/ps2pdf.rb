@@ -3,7 +3,7 @@
 # last edited by: Paulo Cereda
 # requires arara 3.0+
 class Macaw
-  def ps2pdf(parameters)
+  rule :ps2pdf => opt: %i{options output}, req: [] do |parameters|
     parameters.output ||= @base
 
     cmd = ['ps2pdf']

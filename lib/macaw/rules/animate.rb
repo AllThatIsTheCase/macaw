@@ -16,7 +16,7 @@
 # which will output myfile.gif
 #
 class Macaw
-  def animate(parameters)
+  rule :animate => req: [], opt: %i{delay loop density} do |parameters|
     parameters.delay ||= 10
     parameters.loop ||= 0
     parameters.density ||= 300
