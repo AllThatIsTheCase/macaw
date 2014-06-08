@@ -3,6 +3,6 @@
 # requires arara 3.0
 class Macaw
   def songidx(input)
-    Macaw.system "songidx " + "#{input}.sxd".shellescape
+    Macaw.system "songidx " + ~"#{input}.sxd"
   end
 end

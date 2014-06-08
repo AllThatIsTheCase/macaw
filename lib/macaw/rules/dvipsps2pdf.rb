@@ -4,7 +4,7 @@
 class Macaw
   def dvipsps2pdf(options=nil, output=nil)
     output ||= @base
-    Macaw.system "dvips #{"#{@base}.dvi".shellescape} -o #{"#{@base}.ps".shellescape} #{options}"
-    Macaw.system "ps2pdf #{options} #{"#{@base}.ps".shellescape} #{"#{output}.pdf".shellescape}"
+    Macaw.system "dvips #{~"#{@base}.dvi"} -o #{~"#{@base}.ps"} #{options}"
+    Macaw.system "ps2pdf #{options} #{~"#{@base}.ps"} #{~"#{output}.pdf"}"
   end
 end

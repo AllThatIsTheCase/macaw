@@ -8,9 +8,9 @@ class Macaw
 
     cmd = ['makeindex']
     cmd << options
-    cmd << "#{@base}.nlo".shellescape
-    cmd << '-s ' + "#{style}.ist".shellescape if style
-    cmd << '-o ' + "#{@base}.nls".shellescape
+    cmd << ~"#{@base}.nlo"
+    cmd << '-s ' + ~"#{style}.ist" if style
+    cmd << '-o ' + ~"#{@base}.nls"
 
     Macaw.system cmd
   end

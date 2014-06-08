@@ -8,7 +8,7 @@ class Macaw
       options, 
       style ? "-e '$makeindex=q/makeindex %O -s #{style}.ist -o %D %S/'" : nil,
       '-pdf',
-      @file.shellescape
+      ~@file
     ]
   end
 end

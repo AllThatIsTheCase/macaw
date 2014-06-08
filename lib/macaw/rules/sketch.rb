@@ -5,9 +5,9 @@ class Macaw
   def sketch(options=nil)
     cmd = ['sketch']
     cmd << options
-    cmd << @file.shellescape
+    cmd << ~@file
     cmd << '-o'
-    cmd << "#{@base}.tex".shellescape
+    cmd << ~"#{@base}.tex"
 
     Macaw.system cmd
   end

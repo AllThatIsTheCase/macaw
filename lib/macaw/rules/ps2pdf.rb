@@ -8,8 +8,8 @@ class Macaw
 
     cmd = ['ps2pdf']
     cmd << options
-    cmd << "#{@base}.ps".shellescape
-    cmd << "#{output}.pdf".shellescape
+    cmd << ~"#{@base}.ps"
+    cmd << ~"#{output}.pdf"
 
     Macaw.system cmd
   end

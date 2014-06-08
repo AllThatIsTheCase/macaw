@@ -10,7 +10,7 @@ class Macaw
     cmd << shell ? '--shell-escape' : '--no-shell-escape'
     cmd << options
     cmd << "$makeindex=q/makeindex %O -s #{style}.ist -o %D %S/" if style
-    cmd << "-pdf #{@file.shellescape}"
+    cmd << "-pdf #{~@file}"
 
     Macaw.system cmd
   end

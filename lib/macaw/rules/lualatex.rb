@@ -10,7 +10,7 @@ class Macaw
     cmd << "--#{shell ? '' : 'no-'}shell-escape"
     cmd << "--synctex=#{synctex ? 1 : 0}"
     cmd << options
-    cmd << @file.shellescape
+    cmd << ~@file
 
     Macaw.system cmd
   end

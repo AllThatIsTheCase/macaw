@@ -24,6 +24,16 @@ end
 CONFIGFILE = [File.join(Dir.home, 'araraconfig.yaml'), File.join(Dir.home, '.araraconfig.yaml')].detect{|config| File.file?(config) }
 CONFIG = CONFIGFILE ? YAML.load_file(CONFIGFILE) : {}
 
+class String
+  def ~
+    if os.windows?
+      return '"' + self.gsub('"', '""') + '"'
+    else
+      return self.shellescape
+    end
+  end
+end
+
 class JSON::Pure::Parser
   IDENTIFIER = /[^:\s\\",{}\[\]]+/i
   alias :parse_quoted_string :parse_string
@@ -83,6 +93,14 @@ class Macaw
 
       macaw.send(cmd, *accept.collect{|k, v| params[v.to_s]})
     }
+  end
+
+  def !(value)
+    if os.windows?
+      return '"' + value.to_s.gsub('"', '""') + '"'
+    else
+      return value.to_s.shellescape
+    end
   end
 
   def self.system(cmd)

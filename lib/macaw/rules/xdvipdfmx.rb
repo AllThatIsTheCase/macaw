@@ -4,6 +4,6 @@
 class Macaw
   def dvipdfmx(output=nil, options=nil)
     output ||= base
-    Macaw.system ['xdvipdfmx', "#{@base}.dvi".shellescape, '-o', "#{output}.ps", options]
+    Macaw.system ['xdvipdfmx', ~"#{@base}.dvi", '-o', ~"#{output}.ps", options]
   end
 end

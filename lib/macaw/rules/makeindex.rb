@@ -9,7 +9,7 @@ class Macaw
     cmd = ['makeindex']
     cmd << '-g' if german
     cmd << "-s #{style}" if style
-    cmd << "#{@base}.#{extension}".shellescape
+    cmd << ~"#{@base}.#{extension}"
 
     Macaw.system cmd
   end

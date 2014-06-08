@@ -7,7 +7,7 @@ class Macaw
 
     cmd = ['latexmk']
     cmd << include.downcase if include && %w{all -c}.include(include.downcase)
-    cmd << @file.shellescape
+    cmd << ~@file
     Macaw.system cmd
   end
 end

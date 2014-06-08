@@ -6,9 +6,9 @@ class Macaw
   def frontespizio(engine)
     engine ||= 'pdflatex'
 
-    Macaw.system "#{engine} #{@base.shellescape}"
-    Macaw.system "#{engine} #{"#{@base}-frn".shellescape}"
-    Macaw.system "dvips -o #{"#{@base}-frn.eps".shellescape} #{"#{@base}-frn".shellescape}" if engine == 'latex'
-    Macaw.system "#{engine} #{@base.shellescape}"
+    Macaw.system "#{engine} #{~@base}"
+    Macaw.system "#{engine} #{~"#{@base}-frn"}"
+    Macaw.system "dvips -o #{~"#{@base}-frn.eps"} #{~"#{@base}-frn"}" if engine == 'latex'
+    Macaw.system "#{engine} #{~@base}"
   end
 end

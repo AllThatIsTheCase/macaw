@@ -10,7 +10,7 @@ class Macaw
       "--#{shell ? '' : 'no-'}shell-escape",
       "--synctex=#{syntex ? 1 : 0}",
       options,
-      @file.shellescape
+      ~@file
     ]
   end
 end

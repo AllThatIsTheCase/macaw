@@ -8,9 +8,9 @@ class Macaw
     cmd << "--synctex=#{synctex ? 1 : 0}"
     cmd << "--#{shell ? '' : 'no-'}shell-escape"
     cmd << options
-    cmd << "-e '$makeindex=q/makeindex %O -s #{"#{style}.ist".shellescape} -o %D %S/'" if style
+    cmd << "-e '$makeindex=q/makeindex %O -s #{~"#{style}.ist"} -o %D %S/'" if style
     cmd << '-pdf'
-    cmd << @file.shellescape
+    cmd << ~@file
 
     Macaw.system cmd
   end

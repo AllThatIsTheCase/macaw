@@ -4,6 +4,6 @@
 class Macaw
   def dvips(options=nil, output=nil)
     output ||= @base
-    Macaw.system "dvips #{"#{@base}.dvi".shellescape} -o #{"#{output}.ps".shellescape} #{options}"
+    Macaw.system "dvips #{~"#{@base}.dvi"} -o #{~"#{output}.ps"} #{options}"
   end
 end

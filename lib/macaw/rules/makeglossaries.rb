@@ -4,6 +4,6 @@
 class Macaw
   def makeglossaries(options=nil)
 
-    Macaw.system ['makeglossaries', options, @base.shellescape]
+    Macaw.system ['makeglossaries', options, ~@base]
   end
 end

@@ -24,12 +24,12 @@ class Macaw
     cmd << '-s' if silent
     cmd << '-t' if trace
     cmd << '-l' if localSettings
-    cmd << "-c=#{cruft.shellescape}" if cruft
+    cmd << "-c=#{~cruft}" if cruft
     cmd << '-w' if overwrite
     cmd << '-d' if onlyDefault
-    cmd << "-o #{output.shellescape}" if output
-    cmd << @file.shellescape
-    cmd << output.shellescape if output
+    cmd << "-o #{~output}" if output
+    cmd << ~@file
+    cmd << ~output if output
 
     Macaw.system cmd
   end
