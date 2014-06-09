@@ -51,14 +51,17 @@ I18n.load_path = Dir[File.expand_path(File.join(File.dirname(__FILE__), '..', 'l
 I18n.default_locale = :en
 
 def options!
+  options = {}
   [true, false].collect{|dryrun|
     opts = OptionParser.new{|parser|
       parser.banner = "#{I18n.t('help.usage')}: macaw [options] FILE"
       parser.separator ""
 
+      options[:language] = I18n.default_locale
       parser.on('-L', '--language LANG', I18n.t('help.language')){|lang|
         begin
           I18n.locale = lang.intern
+          options[:language] = lang.intern
         rescue I18n::InvalidLocale
           if !dryrun
             puts "#{lang.inspect} is not among the supported languages #{I18n.available_locales.inspect}"
@@ -67,13 +70,17 @@ def options!
         end
       }
 
-      parser.on('-l', '--log', I18n.t('help.log'))
-
-      parser.on('-t', '--timeout SECONDS', I18n.t('help.timeout')){|timeout|
-        Integer(timeout)
+      parser.on('-l', '--log', I18n.t('help.log')) {|v|
+        options[:log] = v
       }
 
-      parser.on('-v', '--verbose', I18n.t('help.verbose'))
+      parser.on('-t', '--timeout SECONDS', I18n.t('help.timeout')){|timeout|
+        options[:timeout] = Integer(timeout)
+      }
+
+      parser.on('-v', '--verbose', I18n.t('help.verbose')) {|v|
+        options[:verbose] = v
+      }
 
       parser.on_tail('-h', '--help', '--usage', I18n.t('help.help')){
         if !dryrun
@@ -97,7 +104,8 @@ def options!
     else
       opts.parse!
     end
-  }.last
+  }
+  options
 end
 
 OPTS=options!
