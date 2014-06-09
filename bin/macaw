@@ -108,18 +108,6 @@ def options!
   options
 end
 
-OPTS=options!
-
-error("No filename to process") if ARGV.size == 0
-error("Expected exactly one filename to process #{ARGV.inspect}") if ARGV.size != 1
-if File.file?(ARGV[0])
-  TEX = ARGV[0]
-elsif File.file?(ARGV[0] + '.tex')
-  TEX = ARGV[0] + '.tex'
-else
-  error("#{ARGV[0].inspect} does not exist") if !File.exists?(ARGV[0])
-end
-
 CONFIGFILE = [File.join(Dir.home, 'araraconfig.yaml'), File.join(Dir.home, '.araraconfig.yaml')].detect{|config| File.file?(config) }
 CONFIG = CONFIGFILE ? YAML.load_file(CONFIGFILE) : {}
 
@@ -158,12 +146,23 @@ class Macaw
   end
   attr_reader :file, :base
 
-  def self.run(file)
-    Macaw.load_rules
-    macaw = Macaw.new(file)
-    @@log = File.open(@base + '.log') if OPTS[:log]
+  def self.options
+    @@options ||= options!
+  end
 
-    IO.readlines(file).each{|line|
+  def self.run
+    @@options=options!
+
+    error("No filename to process") if ARGV.size == 0
+    error("Expected exactly one filename to process #{ARGV.inspect}") if ARGV.size != 1
+    tex = File.file?(ARGV[0]) ? ARGV[0] : ARGV[0] + '.tex'
+    error("#{ARGV[0].inspect} does not exist") if !File.exists?(tex)
+
+    Macaw.load_rules
+    macaw = Macaw.new(tex)
+    @@log = File.open(@base + '.log') if @@options[:log]
+
+    IO.readlines(tex).each{|line|
       next unless line =~ /^% arara: /
       line.strip!
       line.sub!(/^%\s+arara\s*:\s*/, '')
@@ -205,17 +204,17 @@ class Macaw
 
     output = ''
     begin
-      if OPTS[:timeout]
-        Timeout::timeout(OPTS[:timeout]) { output = `#{cmd}` }
+      if @@options[:timeout]
+        Timeout::timeout(@@options[:timeout]) { output = `#{cmd}` }
       else
         output = `#{cmd}`
       end
     rescue Timeout::Error
-      throw "#{cmd}: timed out after #{OPTS[:timeout]} seconds"
+      throw "#{cmd}: timed out after #{@@options[:timeout]} seconds"
     end
 
     @@log.write(output) if @@log
-    print output if OPTS[:verbose]
+    print output if @@options[:verbose]
     return output if $?.to_i == 0
     throw "#{cmd}: #{$?}"
   end
@@ -225,4 +224,4 @@ class Macaw
   end
 end
 
-Macaw.run(TEX)
+Macaw.run

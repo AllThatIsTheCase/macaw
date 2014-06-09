@@ -8,6 +8,7 @@ task :bump do
   version[2] += 1
   version = version.collect{|v| v.to_s}.join('.')
   File.open('lib/macaw/version.rb', 'w'){|f| f.write("class Macaw\n  VERSION = #{version.inspect}\nend\n") }
+  puts `git add lib/macaw/version.rb Gemfile.lock`
 end
 
 task :publish do
