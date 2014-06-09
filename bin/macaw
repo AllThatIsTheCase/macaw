@@ -11,9 +11,11 @@ require 'shellwords'
 require 'optparse'
 require 'timeout'
 require 'i18n'
+require 'open3'
 
 def error(msg)
-  puts msg
+  puts "\n\n#{msg}"
+  Macaw.log.close if Macaw.log
   exit 1
 end
 
@@ -160,7 +162,7 @@ class Macaw
 
     Macaw.load_rules
     macaw = Macaw.new(tex)
-    @@log = File.open(@base + '.log') if @@options[:log]
+    @@log = File.open(macaw.base + '.log', 'w') if @@options[:log]
 
     IO.readlines(tex).each{|line|
       next unless line =~ /^% arara: /
@@ -198,25 +200,32 @@ class Macaw
     }
   end
 
+  def self.log
+    @@log
+  end
+
   def self.system(cmd)
     cmd = cmd.compact.join(' ') if cmd.is_a?(Array)
     puts cmd
 
     output = ''
     begin
-      if @@options[:timeout]
-        Timeout::timeout(@@options[:timeout]) { output = `#{cmd}` }
-      else
-        output = `#{cmd}`
-      end
-    rescue Timeout::Error
-      throw "#{cmd}: timed out after #{@@options[:timeout]} seconds"
-    end
+      Timeout::timeout(@@options[:timeout] || 0) {
+        Open3.popen2e(cmd) do |stdin, stdout_err, wait_thr|
+          while line = stdout_err.gets
+            puts line if @@options[:verbose]
+            @@log.write(line) if @@log
+            output += line + "\n"
+          end
 
-    @@log.write(output) if @@log
-    print output if @@options[:verbose]
-    return output if $?.to_i == 0
-    throw "#{cmd}: #{$?}"
+          exit_status = wait_thr.value
+          error "cmd failed: #{cmd}" unless exit_status.success?
+        end
+      }
+    rescue Timeout::Error
+      error "#{cmd}: timed out after #{@@options[:timeout]} seconds"
+    end
+    return output
   end
 
   def self.load_rules
