@@ -1,0 +1,10 @@
+---
+nl:
+  help:
+    language: zet de taal van de application
+    log:      genereer een log bestand
+    timeout:  set uitvoer timeout
+    verbose:  toon de uitvoer van de commando's
+    version:  toon de applicatie versie
+    usage:    Gebruik
+    banner:   banner

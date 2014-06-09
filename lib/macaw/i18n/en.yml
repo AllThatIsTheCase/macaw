@@ -1,0 +1,12 @@
+---
+en:
+  help:
+    language: set the application language
+    log:      generate a log output
+    timeout:  set execution timeout
+    verbose:  print the command output
+    version:  print the application version
+    usage:    Usage
+    rights:   All rights reserved.
+    thanks:   A special thanks goes to CONTRIBUTORS, and many others for making this humble tool possible.
+

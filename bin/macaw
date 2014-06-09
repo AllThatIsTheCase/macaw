@@ -2,15 +2,104 @@
 
 require 'yaml'
 require 'pp'
-require 'macaw'
+require_relative '../lib/macaw'
+require_relative '../lib/macaw/version'
 require 'json/pure'
 require 'os'
 require 'shellwords'
+require 'optparse'
+require 'timeout'
+require 'i18n'
 
 def error(msg)
   puts msg
   exit 1
 end
+
+puts [
+' __  __                          ',
+'|  \/  | __ _  ___ __ ___      __',
+'| |\/| |/ _` |/ __/ _` \ \ /\ / /',
+'| |  | | (_| | (_| (_| |\ V  V / ',
+'|_|  |_|\__,_|\___\__,_| \_/\_/  ',
+'                                 ',
+].join("\n")
+
+CONTRIBUTORS = [
+  'Alan Munn',
+  'Andrew Stacey',
+  'Brent Longborough',
+  'Clemens Niederberger',
+  'David Carlisle',
+  'Enrico Gregorio',
+  'Francesco Endrici',
+  'Gonzalo Medina',
+  'Harish Kumar',
+  '?lhan Polat',
+  'Joseph Wright',
+  'Marco Daniel',
+  'Mikaδl Maunier',
+  'Patrick Gundlach',
+  'Rasmus Roulund',
+  'Sergey Ulyanov',
+  'Stefan Kottwitz'
+].join(', ')
+
+I18n.enforce_available_locales = true
+I18n.load_path = Dir[File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', 'macaw', 'i18n', '*.yml'))]
+I18n.default_locale = :en
+
+def options!
+  [true, false].collect{|dryrun|
+    opts = OptionParser.new{|parser|
+      parser.banner = "#{I18n.t('help.usage')}: macaw [options] FILE"
+      parser.separator ""
+
+      parser.on('-L', '--language LANG', I18n.t('help.language')){|lang|
+        begin
+          I18n.locale = lang.intern
+        rescue I18n::InvalidLocale
+          if !dryrun
+            puts "#{lang.inspect} is not among the supported languages #{I18n.available_locales.inspect}"
+            exit
+          end
+        end
+      }
+
+      parser.on('-l', '--log', I18n.t('help.log'))
+
+      parser.on('-t', '--timeout SECONDS', I18n.t('help.timeout')){|timeout|
+        Integer(timeout)
+      }
+
+      parser.on('-v', '--verbose', I18n.t('help.verbose'))
+
+      parser.on_tail('-h', '--help', '--usage', I18n.t('help.help')){
+        if !dryrun
+          puts parser.help
+          exit
+        end
+      }
+
+      parser.on_tail('-V', '--version', I18n.t('help.version')){
+        if !dryrun
+          puts "macaw #{Macaw::VERSION} - The cool TeX automation tool\nCopyright (c) 2012, Paulo Roberto Massa Cereda\n"
+          puts I18n.t('help.rights')
+          puts "\n"
+          puts I18n.t('help.thanks').sub('CONTRIBUTORS', CONTRIBUTORS).gsub(/(.{1,#{60}})(?: +|$)\n?|(.{#{60}})/, "\\1\\2\n")
+          exit
+        end
+      }
+    }
+    if dryrun
+      opts.parse!(ARGV.dup)
+    else
+      opts.parse!
+    end
+  }.last
+end
+
+OPTS=options!
 
 error("No filename to process") if ARGV.size == 0
 error("Expected exactly one filename to process #{ARGV.inspect}") if ARGV.size != 1
@@ -52,14 +141,19 @@ class JSON::Pure::Parser
 end
 
 class Macaw
+  @@log = nil
+
   def initialize(tex)
     @file = tex
     @base = File.basename(@file, File.extname(@file))
   end
+  attr_reader :file, :base
 
   def self.run(file)
     Macaw.load_rules
     macaw = Macaw.new(file)
+    @@log = File.open(@base + '.log') if OPTS[:log]
+
     IO.readlines(file).each{|line|
       next unless line =~ /^% arara: /
       line.strip!
@@ -99,8 +193,20 @@ class Macaw
   def self.system(cmd)
     cmd = cmd.compact.join(' ') if cmd.is_a?(Array)
     puts cmd
-    output = `#{cmd}`
-    puts output
+
+    output = ''
+    begin
+      if OPTS[:timeout]
+        Timeout::timeout(OPTS[:timeout]) { output = `#{cmd}` }
+      else
+        output = `#{cmd}`
+      end
+    rescue Timeout::Error
+      throw "#{cmd}: timed out after #{OPTS[:timeout]} seconds"
+    end
+
+    @@log.write(output) if @@log
+    print output if OPTS[:verbose]
     return output if $?.to_i == 0
     throw "#{cmd}: #{$?}"
   end

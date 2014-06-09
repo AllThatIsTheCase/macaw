@@ -1,18 +1,22 @@
 PATH
   remote: .
   specs:
-    macaw-ruby (0.0.10)
+    macaw-ruby (0.0.11)
+      i18n
       json_pure
       os
       require_all
+      trollop
 
 GEM
   remote: https://rubygems.org/
   specs:
+    i18n (0.6.9)
     json_pure (1.8.1)
     os (0.9.6)
     rake (10.3.2)
     require_all (1.3.2)
+    trollop (2.0)
 
 PLATFORMS
   ruby

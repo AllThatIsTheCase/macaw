@@ -25,4 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'json_pure'
   spec.add_runtime_dependency 'require_all'
   spec.add_runtime_dependency 'os'
+  spec.add_runtime_dependency 'trollop'
+  spec.add_runtime_dependency 'i18n'
 end
