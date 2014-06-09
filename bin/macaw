@@ -83,10 +83,10 @@ def options!
 
       parser.on_tail('-V', '--version', I18n.t('help.version')){
         if !dryrun
-          puts "macaw #{Macaw::VERSION} - The cool TeX automation tool\nCopyright (c) 2012, Paulo Roberto Massa Cereda\n"
-          puts I18n.t('help.rights')
+          puts "macaw #{Macaw::VERSION} - #{I18n.t('header.Slogan')}\nCopyright (c) 2012, Paulo Roberto Massa Cereda\n"
+          puts I18n.t('header.AllRightsReserved')
           puts "\n"
-          puts I18n.t('help.thanks').sub('CONTRIBUTORS', CONTRIBUTORS).gsub(/(.{1,#{60}})(?: +|$)\n?|(.{#{60}})/, "\\1\\2\n")
+          puts I18n.t('msg.SpecialThanks', :contributors => CONTRIBUTORS).gsub(/(.{1,#{60}})(?: +|$)\n?|(.{#{60}})/, "\\1\\2\n")
           exit
         end
       }

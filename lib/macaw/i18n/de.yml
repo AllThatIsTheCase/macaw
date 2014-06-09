@@ -1,0 +1,173 @@
+---
+de:
+  log:
+    WelcomeMessage: Willkommen zu arara %{0}!
+    ProcessingFile: Bearbeitung der Datei ''%{0}'', bitte warten.
+    Done: Fertig.
+    ExceptionRaised: 'Eine Ausnahme mit folgender Nachricht ist durch arara ausgelöst
+      worden:'
+    ReadyToRunCommands: Bereit zum Start der Anweisungen.
+    CommandName: 'Verarbeitung von: ''''%{0}''''.'
+    Command: 'Anweisung: %{0}'
+    CommandSuccess: "''%{0}'' wurde erfolgreich ausgeführt."
+    CommandFailure: "''%{0}'' gibt einen Fehlerwert zurück."
+    AllCommandsSuccess: Alle Anweisungen wurden erfolgreich ausgeführt.
+    OutputLogging: 'Ausgabe des Protokolls:'
+    CommandNotFound: "''%{0}'' wurde nicht im Suchpfad gefunden. Ausführungsversuch:
+      %{1}"
+    DirectiveFound: Anweisung in Zeile %{0} mit %{1} gefunden.
+    RuleFound: Aufgabe ''%{0}'' gefunden in ''%{1}''.
+    NoDirectivesFound: Keine Anweisungen in ''%{0}'' gefunden.
+  help:
+    Version: Ausgabe der Version.
+    Help: Ausgabe der Hilfe.
+    Log: Erstelle eine Protokolldatei (.log-Datei).
+    Verbose: Gebe das Protokoll der Anweisungen aus.
+    Timeout: Deklariere die Zeitbeschränkung je Anweisung (in Millisekunden).
+    Language: Lege die Sprache der Anwendung fest.
+    DryRun: Gehe durch alle definierten Anweisungen ohne sie auszuführen.
+    MaximumNumberOfLoops: Setze die maximale Anzahl an Schleifendurchgängen.
+  header:
+    Slogan: Das coole TeX Automatisierungstool
+    AllRightsReserved: Alle Rechte vorbehalten!
+  msg:
+    NoDirectivesFound: Ich habe keine Anweisungen in ''%{0}'' gefunden und daher nichts
+      getan. Ist es das, was du wirklich wolltest.
+    SpecialThanks: Ein besonderes Danke geht an Alan Munn, Andrew Stacey, Brent Longborough,
+      Christopher Hughes, Clemens Niederberger, David Carlisle, Enrico Gregorio, Francesco
+      Endrici, Gonzalo Medina, Harish Kumar, Heiko Oberdiek, İlhan Polat, Joseph Wright,
+      Marco Daniel, Mikaël Maunier, Nicola Talbot, Patrick Gundlach, Rasmus Roulund,
+      Sergey Ulyanov, Stefan Kottwitz und viele andere, die dieses bescheidene Tool
+      ermöglichten.
+    RunningCommand: Verarbeite %{0}...
+    Success: ERFOLGREICH
+    Failure: FEHLERHAFT
+    Status: 'Status:'
+  yamlerror:
+    Context: 'Kontext: %{0}'
+    Problem: 'Problem: %{0}'
+    ErrorLocation: Fehler in Zeile %{0}, Spalte %{1}.
+  error:
+    FileDoesNotExistWithExtensionsList: Es tut mir Leid, aber die Datei ''%{0} %{1}''
+      existiert nicht. Beachte bitte, dass wenn du nur den Dateinamen (ohne Endung)
+      oder eine unbekannte Dateiendung angegeben hast, arara stets versucht nach unterstützten
+      Dateiendungen in der Reihenfolge %{1} zu suchen. Du kannst die Reihenfolge bzw.
+      das Suchmuster ändern oder sogar neue Dateiendung hinzufügen. Bitte konsolidiere
+      die Dokumentation, um mehr über dieses und andere Features zu erfahren.
+    FileDoesNotExist: Datei ''%{0}'' existiert nicht.
+    CommandNotFound: Es tut mir Leid, aber die Anweisung der Aufgabe ''%{0}'' konnte
+      nicht gefunden werden. Bist du dir sicher, dass die Anweisung ''%{1}'' korrekt
+      oder über die Systempfade zugänglich ist?
+    InvalidYAMLConfigurationFile: 'Es tut mir Leid, aber deine arara Konfigurationsdatei
+      ist unzulässig. Dies kann aus einem unzulässigen oder fehlenden YAML Eintrag
+      resultieren. Ich versuchte mein Bestes, um einen Auszug der Fehlermeldung zu
+      machen. Hier ist es:'
+    InvalidConfigurationFile: Uh-oh, die Konfigurationsdatei scheint unzulässig zu
+      sein. Bist du dir sicher, dass es sich um eine korrekt erstellte YAML-Datei
+      handelt? Leider kann arara nicht fortsetzen, bis eine passende Konfigurationsdatei
+      bereitgestellt wird.
+    InvalidLanguageConfigurationFile: 'Housten, wir haben ein Problem. Leider ist
+      die in der Konfigurationsdatei spezifizierte Sprache nicht zulässig. Momentan
+      kann arara die folgenden Sprachen unterstützen: %{0}. Stelle sicher, dass eine
+      gültige Sprache gewählt wird oder entferne den Eintrag aus deiner Konfigurationsdatei
+      (der Sprachschlüssel ist optional), ansonsten kann arara nicht ausgeführt werden.'
+    InvalidFiletypesConfigurationFile: Es tut mir Leid, aber es scheint, dass du eine
+      benutzerdefinierte Konfigurationsdatei nutzt, bei der weder die Dateiendung
+      noch das Muster definiert wurde. Beides wird zum Fortfahren benötigt. Bitte
+      behebe diesen Fehler in deiner Konfigurationsdatei und versuche es erneut.
+    PathRuntimeErrorConfigurationFile: 'Es tut mir Leid, aber einer der Einträge des
+      Suchpfades in deiner Konfigurationsdatei hat eine nicht verfügbare Variable
+      im Zusammenhang mit dem Pfad: %{0}'
+    PathIOErrorConfigurationFile: Es tut mir Leid, aber  einer der Einträge des Suchpfades
+      in deiner Konfigurationsdatei hat eine ungültige Verzeichnisstruktur. Kannst
+      du einen Blick darauf werfen?
+    InvalidYAMLDirective: 'Es scheint, als gäbe es eine deformierte Anweisung in der
+      Zeile %{0}. Die Anweisung kann einen Fehler in der YAML-Syntax aufweisen bzw.
+      einen ungültiger Eintrag haben. Ich versuchte mein Bestes, um einen Auszug der
+      Fehlermeldung zu machen. Hier ist es:'
+    DirectiveEmptyCurlyBrackets: Die Anweisung %{0} in Zeile %{1} hat ein leeres geschweiftes
+      Klammerpaar. Beachte bitte, dass arara für eine klare Syntax optimiert ist,
+      wenn kein Parameter übergeben wird, sollte auch keine Klammer angegeben werden.
+      Um den Fehler zu beseitigen, reicht es aus, die geschweiften Klammern zu entfernen
+      oder ein Argument für die Anweisung zu übergeben.
+    DirectiveInvalidArgumentList: Die Anweisung %{0} in Zeile %{1} hat einen unzulässigen
+      Argumenttypen. Das Argument %{2} ist ein reserviertes Schlüsselwort von arara
+      und verlangt stets eine Liste.
+    DirectiveReservedKeyword: Die Anweisung %{0} in Zeile %{1} hat einen unzulässigen
+      Argumentnamen. Der Name %{2} ist ein reserviertes Schlüsselwort von arara und
+      repräsentiert jedes Element in der Liste %{3}. Bitte wähle einen anderen Namen
+      als Argument.
+    DirectiveListError: Die Anweisung ''%{0}'' in Zeile ''%{1}'' hat einen unzulässigen
+      Argumenttypen. Nur die Argumente ''files'' und ''items'' können eine liste haben.
+      Beides sind reservierte Schlüsselwörter von arara.
+    InvalidDirective: Anscheinend gibt es eine ungültige Direktive in der Zeile %{0}.
+      Bitte prüfe und behebe es.
+    DirectiveGenericError: Die Anweisung ''%{0}'' in Zeile ''%{1}'' scheint deformiert
+      zu sein. Es kann ein Fehler in der YAML-Syntax oder eine falsche Zuordnung sein.
+    InvalidLanguage: 'Es tut mir Leid, aber die gewählte Sprache ist nicht verfügbar.
+      Im Moment werden folgende Sprachen unterstützt:'
+    RuleNotFound: Uh-oh, Ich konnte die Regel ''%{0}'' im Suchpfad nicht finden. Kannst
+      du bitte prüfen, ob der Regelname korrekt ist und die Regel durch den Suchpfad
+      gefunden wird?
+    InvalidYAMLRule: 'Es scheint, dass die Aufgabe ''''%{0}'''' einen Fehler in der
+      YAML-Syntax hat oder ein ungültiges Feld nutzt. Kannst du einen Blick auf die
+      Datei ''''%{0}.yaml'''' im Pfad ''''%{1}'''' werfen. Ich versuchte mein Bestes,
+      um die Fehlermeldung auszuwerfen. Hier ist sie:'
+    InvalidRule: Uh-oh, Die Aufgabe ''%{0}'' scheint ungültig zu sein. Bist du dir
+      sicher, dass die Datei ''%{0}.yaml'' im Pfad ''%{1}'' eine gültige YAML file
+      ist?
+    EmptyIdentifierRule: Ein Problem in der Aufgabe ''%{0}'' wurde festgestellt. Die
+      Datei ''%{0}.yaml'' im Pfad ''%{1}'' verlangt einen gültigen Bezeichner (identifier).
+      Kannst du es beheben?
+    EmptyNameRule: Ein Problem in der Aufgabe ''%{0}'' wurde festgestellt. Die Datei
+      ''%{0}.yaml'' im Pfad ''%{1}'' verlangt einen gültigen Dateinamen. Kannst du
+      es beheben?
+    ForbiddenIdentifierRule: Uh-oh, die Aufgabe ''%{0}'' (Referenzierung auf Datei
+      ''%{0}.yaml'' im Pfad ''%{1}'') hat einen ungültigen Argumenteinbezeichner.
+      ''%{2}'' ist ein reserviertes Schlüsselwort und kann daher nicht genutzt werden.
+      Kannst du einen anderen Namen nutzen?
+    EmptyArgumentsListRule: 'Ein Problem wurde in der Aufgabe ''''%{0}'''' festgestellt.
+      Die Datei ''''%{0}.yaml'''' im Pfad ''''%{1}'''' verlangt eine validierte Liste
+      an Argumenten. Kannst du es beheben? Beachte, dass die Liste der Argumente auch
+      leer sein kann. Es ist aber unbedingt notwendig, dass das Argument explizit
+      angeben wird: ''''arguments: []''''.'
+    WrongIdentifierRule: 'Uh-oh, die Aufgabe ''''%{0}'''' (Referenzierung auf Datei
+      ''''%{0}.yaml'''' im Pfad ''''%{1}'''') hat einen falschen Identifier: ''''identifier''''
+      - Es wurde ''''%{0}'''' anstelle von ''''%{2}'''' erwartet. Kannst du es beheben?'
+    ArgumentsNotDefinedInRule: 'Oh nein, es gibt Argumente in der Anweisung ''''%{0}'''',
+      welche nicht in der Regel ''''%{0}.yaml'''' im Pfad ''''%{1}'''' definiert wurden.
+      Du kannst sie aus der Anweisung ''''%{0}'''' entfernen oder als Liste von Argumenten
+      in der Regel ''''%{0}.yaml'''' ergänzen. Hier sind sie: %{2}'
+    DefaultValueRuntimeErrorRule: 'Es tut mir Leid, aber der Defaultwert für das Argument
+      ''''%{0}'''' der Aufgabe ''''%{1}'''' (Referenzierung auf Datei ''''%{0}.yaml''''
+      im Pfad ''''%{1}'''') hat eine ungültige Variable/Methode im Regelkontext: ''''%{3}'''''
+    FlagRuntimeErrorRule: 'Es tut mir Leid, aber der Flag für das Argument ''''%{0}''''
+      der Aufgabe ''''%{1}'''' (Referenzierung auf Datei ''''%{0}.yaml'''' im Pfad
+      ''''%{1}'''') hat eine ungültige Variable/Methode im Regelkontext: ''''%{3}'''''
+    DuplicatedCommandElementsRule: Uh-oh, in der Aufgabe ''%{0}'' werden beide Felder
+      ''command'' und ''commands'' verwendet (Referenzierung auf Datei ''%{0}.yaml''
+      im Pfad ''%{1}''). Du kannst nur eine der Anweisungen auswählen. Sollte deine
+      Aufgabe von einem einzelnen Kommando abhängen, kannst du ''command'' optimieren.
+      Sollte deine Regel mehrere Anweisungen benötigen, könnte das Feld ''commands''
+      geeignet sein.
+    MissingCommandElementsRule: Uh-oh, die Aufgabe ''%{0}'' (Referenzierung auf Datei
+      ''%{0}.yaml'' im Pfad ''%{1}'') hat keines der Elemente ''command'' oder ''commands''.
+      Du musst nur eine der Anweisungen auswählen. Sollte deine Aufgabe von einem
+      einzelnen Kommando abhängen, kannst du ''command'' optimieren. Sollte deine
+      Regel mehrere Anweisungen benötigen, könnte das Feld ''commands'' geeignet sein.
+    CommandRuntimeErrorRule: 'Es tut mir Leid, aber das Kommando, welches in der Aufgabe
+      ''''%{0}'''' (Referenzierung auf Datei ''''%{0}.yaml'''' im Pfad ''''%{1}'''')
+      genutzt wird, hat eine ungültige Variable/Methode im Regelsinn: ''''%{2}'''''
+    XMLFileNotFound: Es tut mir Leid, aber ich konnte die ''%{0}'' im aktuellen Verzeichnis
+      nicht finden.
+    XMLBadEncoding: Es tut mir Leid, aber anscheinend hat ''%{0}'' eine schlechte
+      Zeichencodierung. Lösche die Datei und versuche es erneut.
+    XMLMalformedFile: Es tut mir Leid, aber ''%{0}'' scheint deformiert zu sein. Lösche
+      die Datei und versuche es erneut.
+    XMLAccess: Es tut mir Leid, aber ich konnte nicht auf ''%{0}'' zugreifen. Bitte
+      prüfe die Verzeichnisrechte und versuche es erneut.
+    ConditionalNotBoolean: Es tut mir Leid, aber die folgende Bedingung kann nicht
+      zu einem Boole'schen Wert aufgelöst werden. Bitte schreibe es um und versuche
+      es erneut.
+    ConditionalRuntimeError: 'Es tut mir Leid, aber eine der Bedingungen hat eine
+      nicht verfügbare Variable in der Auswertung: ''''%{0}'''''
