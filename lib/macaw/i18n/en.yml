@@ -1,13 +1,7 @@
 ---
 en:
   help:
-    language: set the application language
-    log: generate a log output
-    timeout: set execution timeout
-    verbose: print the command output
-    version: print the application version
     usage: Usage
-    rights: All rights reserved.
     Version: print the application version
     Help: print the help message
     Log: generate a log output
@@ -16,6 +10,7 @@ en:
     Language: set the application language
     DryRun: go through all the motions of running a command, but with no actual calls
     MaximumNumberOfLoops: set the maximum number of loops
+    Progress: print dots for progress
   log:
     WelcomeMessage: Welcome to arara %{0}!
     ProcessingFile: Processing file ''%{0}'', please wait.

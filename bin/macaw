@@ -7,6 +7,7 @@ require_relative '../lib/macaw'
 require_relative '../lib/macaw/version'
 require 'json/pure'
 require 'os'
+require 'ostruct'
 require 'shellwords'
 require 'optparse'
 require 'timeout'
@@ -54,7 +55,7 @@ def options!
       parser.separator ""
 
       options[:language] = I18n.default_locale
-      parser.on('-L', '--language LANG', I18n.t('help.language')){|lang|
+      parser.on('-L', '--language LANG', I18n.t('help.Language')){|lang|
         begin
           I18n.locale = lang.intern
           options[:language] = lang.intern
@@ -66,15 +67,18 @@ def options!
         end
       }
 
-      parser.on('-l', '--log', I18n.t('help.log')) {|v|
+      parser.on('-p', '--progress', I18n.t('help.Progress')) {|v|
+        options[:progress] = v
+      }
+      parser.on('-l', '--log', I18n.t('help.Log')) {|v|
         options[:log] = v
       }
 
-      parser.on('-t', '--timeout SECONDS', I18n.t('help.timeout')){|timeout|
-        options[:timeout] = Integer(timeout)
+      parser.on('-t', '--timeout SECONDS', I18n.t('help.Timeout')){|timeout|
+        options[:timeout] = Float(timeout) / 1000
       }
 
-      parser.on('-v', '--verbose', I18n.t('help.verbose')) {|v|
+      parser.on('-v', '--verbose', I18n.t('help.Verbose')) {|v|
         options[:verbose] = v
       }
 
@@ -85,7 +89,7 @@ def options!
         end
       }
 
-      parser.on_tail('-V', '--version', I18n.t('help.version')){
+      parser.on_tail('-V', '--version', I18n.t('help.Version')){
         if !dryrun
           puts "macaw #{Macaw::VERSION} - #{I18n.t('header.Slogan')}\nCopyright (c) 2012, Paulo Roberto Massa Cereda\n"
           puts I18n.t('header.AllRightsReserved')
@@ -101,7 +105,7 @@ def options!
       opts.parse!
     end
   }
-  options
+  OpenStruct.new(options)
 end
 
 CONFIGFILE = [File.join(Dir.home, 'araraconfig.yaml'), File.join(Dir.home, '.araraconfig.yaml')].detect{|config| File.file?(config) }
@@ -164,7 +168,7 @@ class Macaw
   end
 
   def self.run
-    @@options=options!
+    @@options ||= options!
 
     error("No filename to process") if ARGV.size == 0
     error("Expected exactly one filename to process #{ARGV.inspect}") if ARGV.size != 1
@@ -173,7 +177,7 @@ class Macaw
 
     Macaw.load_rules
     macaw = Macaw.new(tex)
-    @@log = File.open(macaw.base + '.log', 'w') if @@options[:log]
+    @@log = File.open(macaw.base + '.log', 'w') if @@options.log
 
     IO.readlines(tex).each{|line|
       next unless line =~ /^% arara: /
@@ -213,7 +217,7 @@ class Macaw
   end
 
   def self.log(line, force=false)
-    puts line if @@options[:verbose] || force
+    print (options.progress && !force ? '.' : line + "\n") if @@options.verbose || @@options.progress || force
     @@log.write(line) if @@log
   end
 
@@ -225,7 +229,7 @@ class Macaw
 
     output = ''
     begin
-      Timeout::timeout(@@options[:timeout] || 0) {
+      Timeout::timeout(@@options.timeout || 0) {
         Open3.popen2e(cmd) do |stdin, stdout_err, wait_thr|
           while line = stdout_err.gets
             self.log(line)
@@ -237,7 +241,7 @@ class Macaw
         end
       }
     rescue Timeout::Error
-      error "#{cmd}: timed out after #{@@options[:timeout]} seconds" if failonerror
+      error "#{cmd}: timed out after #{@@options.timeout} seconds" if failonerror
     end
     return output
   end

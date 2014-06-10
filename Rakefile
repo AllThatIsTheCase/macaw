@@ -20,5 +20,7 @@ task :publish do
 end
 
 task :test do
-  require './lib/macaw'
+  sh "cp test/test.tex ."
+  sh "./bin/macaw test"
+  sh "rm test.*"
 end
