@@ -134,18 +134,29 @@ class JSON::Pure::Parser
 end
 
 class Macaw
+  class CommandlineError < StandardError; end
+
   @@log = nil
 
   def initialize(tex)
     @file = tex
-    @base = File.basename(@file, File.extname(@file))
+    @base = File.join(File.dirname(@file), File.basename(@file, File.extname(@file)))
   end
   attr_reader :file, :base
 
-  def self.error(msg)
-    puts "\n\n#{msg}"
-    Macaw.log.close if Macaw.log
-    exit 1
+  ERRORMODES=%i{exit throw ignore}
+  def self.error(msg, onfail=:exit)
+    throw "errormode can only be #{ERRORMODES.inspect}" unless ERRORMODES.include?(onfail)
+    case onfail
+      when :exit
+        @@log.close if @@log
+        puts "\n\n#{msg}"
+        exit 1
+      when :throw
+        throw msg
+      else
+        puts msg
+    end
   end
 
   def self.options
@@ -205,7 +216,9 @@ class Macaw
     @@log.write(line) if @@log
   end
 
-  def self.system(cmd, failonerror=true)
+  def self.system(cmd, onfail=:exit)
+    throw "errormode can only be #{ERRORMODES.inspect}" unless ERRORMODES.include?(onfail)
+
     cmd = cmd.compact.join(' ') if cmd.is_a?(Array)
     puts cmd
 
@@ -219,7 +232,7 @@ class Macaw
           end
 
           exit_status = wait_thr.value
-          error "cmd failed: #{cmd}" unless exit_status.success? && failonerror
+          error "cmd failed: #{cmd}", onfail unless exit_status.success?
         end
       }
     rescue Timeout::Error

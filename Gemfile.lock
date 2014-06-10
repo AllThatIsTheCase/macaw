@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    macaw-ruby (0.0.22)
+    macaw-ruby (0.0.23)
       i18n
       json_pure
       os
