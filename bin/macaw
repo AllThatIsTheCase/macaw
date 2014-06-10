@@ -82,7 +82,7 @@ def options!
         options[:verbose] = v
       }
 
-      parser.on_tail('-h', '--help', '--usage', I18n.t('help.help')){
+      parser.on_tail('-h', '--help', '--usage', I18n.t('help.Help')){
         if !dryrun
           puts parser.help
           exit
