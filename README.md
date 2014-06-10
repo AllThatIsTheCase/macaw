@@ -29,7 +29,6 @@ Macaw doesn't use yaml for its rules; rules are Ruby scripts. Macaw will read yo
 your custom rules; in that location, you can drop files that end in '.rb', which are structured like this:
 
     class Macaw # this line is mandatory
-
       # define your macaw rule here. The name after 'def' is the name of your rule,
       # the options between parenthesis are the parameters your rule will accept.
       # Optional parameters are marked using '=nil'.
