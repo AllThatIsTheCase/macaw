@@ -177,7 +177,7 @@ class Macaw
     error("No filename to process") if ARGV.size == 0
     error("Expected exactly one filename to process #{ARGV.inspect}") if ARGV.size != 1
     tex = File.file?(ARGV[0]) ? ARGV[0] : ARGV[0] + '.tex'
-    error("#{ARGV[0].inspect} does not exist") if !File.exists?(tex)
+    error(I18n.t('error.FileDoesNotExist', file: tex)) if !File.exists?(tex)
 
     Macaw.load_rules
 

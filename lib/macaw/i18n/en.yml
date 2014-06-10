@@ -13,7 +13,7 @@ en:
     Progress: print dots for progress
   log:
     WelcomeMessage: Welcome to arara %{0}!
-    ProcessingFile: Processing file ''%{file}'', please wait.
+    ProcessingFile: Processing file '%{file}', please wait.
     Done: Done.
     ExceptionRaised: 'Arara raised an exception with the following message:'
     ReadyToRunCommands: Ready to run commands.
@@ -43,14 +43,14 @@ en:
     Problem: 'Problem: %{0}'
     ErrorLocation: Error found in line %{0}, column %{1}.
   error:
-    FileDoesNotExistWithExtensionsList: I''m sorry, but the file ''%{0} %{1}'' does
+    FileDoesNotExistWithExtensionsList: I'm sorry, but the file '%{0} %{1}' does
       not exist. Note that when you provide only the basename (i.e, the filename without
       the extension) or with an unknown extension, arara will try to look for files
       ending with the predefined extensions %{1} in that order. You can override the
       order, the search pattern or even add support for new extensions through the
       configuration file. Please refer to the arara manual to learn more about this
       feature.
-    FileDoesNotExist: File ''%{0}'' does not exist.
+    FileDoesNotExist: File '%{file}' does not exist.
     CommandNotFound: "\\nI''m sorry, but the command from the ''%{0}'' task could
       not be found. Are you sure the command ''%{1}'' is correct, or even accessible
       from the system path?"
