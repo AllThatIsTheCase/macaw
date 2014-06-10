@@ -1,4 +1,3 @@
-require 'process'
 # sumatrapdf rule for arara
 class Macaw
   def sumatrapdf
