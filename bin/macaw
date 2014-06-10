@@ -61,7 +61,7 @@ def options!
           options[:language] = lang.intern
         rescue I18n::InvalidLocale
           if !dryrun
-            puts "#{lang.inspect} is not among the supported languages #{I18n.available_locales.inspect}"
+            puts I81n.t('error.InvalidLanguageConfigurationFile', languages: I18n.available_locales.collect{|l| l.to_s}.join(', '))
             exit
           end
         end
@@ -180,6 +180,9 @@ class Macaw
     error("#{ARGV[0].inspect} does not exist") if !File.exists?(tex)
 
     Macaw.load_rules
+
+    puts I18n.t('log.ProcessingFile', file: tex)
+
     macaw = Macaw.new(tex)
     @@log = File.open(macaw.base + '.log', 'w') if @@options.log
 
@@ -218,6 +221,8 @@ class Macaw
       puts "\n** #{line} **\n"
       macaw.send(cmd, *accept.collect{|k, v| params[v.to_s]})
     }
+
+    puts I18n.t('log.Done')
   end
 
   def self.log(line, force=false)
