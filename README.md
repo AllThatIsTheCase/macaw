@@ -11,8 +11,8 @@ To install, make sure you have Ruby 1.9 or later installed, and then (on a comma
 
 ## Usage
 
-In day-to-day use it will (should) behave exactly like arara. It accepts the same command line parameters and reads the
-same *standard* rules that are bundled with arara; if you use only those, there's no need to change anything in your
+In day-to-day use it will (should) behave exactly like Arara. It accepts the same command line parameters and reads the
+same *standard* rules that are bundled with Arara; if you use only those, there's no need to change anything in your
 LaTeX documents. Instead of
 
     arara
@@ -36,7 +36,7 @@ your custom rules; in that location, you can drop files that end in '.rb', which
       #
       # For those of you who know ruby, this looks familiar but behaves oddly;
       # using anything else than 'nil' will likewise make the parameter optional,
-      # but you will *always* be passed 'nil' if the arara rule in the tex file
+      # but you will *always* be passed 'nil' if the Arara rule in the tex file
       # did not pass the parameters).
       def zoterobib(collection, format=nil, port=nil, exportCharset=nil, exportNotes=nil, useJournalAbbreviation=nil)
         # ||= assigns a value if it wasn't set; set your default values here
@@ -60,7 +60,7 @@ your custom rules; in that location, you can drop files that end in '.rb', which
       end
     end
 
-You are not required to use Macaw.system BTW; arara is mainly focused on running shell programs, but since Macaw rules
+You are not required to use Macaw.system BTW; Arara is mainly focused on running shell programs, but since Macaw rules
 are ruby scripts, they can do some things natively:
 
     # Clean rule for arara
