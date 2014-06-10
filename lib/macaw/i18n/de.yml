@@ -2,7 +2,7 @@
 de:
   log:
     WelcomeMessage: Willkommen zu arara %{0}!
-    ProcessingFile: Bearbeitung der Datei ''%{0}'', bitte warten.
+    ProcessingFile: Bearbeitung der Datei ''%{file}'', bitte warten.
     Done: Fertig.
     ExceptionRaised: 'Eine Ausnahme mit folgender Nachricht ist durch arara ausgelöst
       worden:'
@@ -31,13 +31,9 @@ de:
     Slogan: Das coole TeX Automatisierungstool
     AllRightsReserved: Alle Rechte vorbehalten!
   msg:
-    NoDirectivesFound: Ich habe keine Anweisungen in ''%{0}'' gefunden und daher nichts
+    NoDirectivesFound: Ich habe keine Anweisungen in ''%{file}'' gefunden und daher nichts
       getan. Ist es das, was du wirklich wolltest.
-    SpecialThanks: Ein besonderes Danke geht an Alan Munn, Andrew Stacey, Brent Longborough,
-      Christopher Hughes, Clemens Niederberger, David Carlisle, Enrico Gregorio, Francesco
-      Endrici, Gonzalo Medina, Harish Kumar, Heiko Oberdiek, İlhan Polat, Joseph Wright,
-      Marco Daniel, Mikaël Maunier, Nicola Talbot, Patrick Gundlach, Rasmus Roulund,
-      Sergey Ulyanov, Stefan Kottwitz und viele andere, die dieses bescheidene Tool
+    SpecialThanks: Ein besonderes Danke geht an %{contributors} und viele andere, die dieses bescheidene Tool
       ermöglichten.
     RunningCommand: Verarbeite %{0}...
     Success: ERFOLGREICH
@@ -54,7 +50,7 @@ de:
       Dateiendungen in der Reihenfolge %{1} zu suchen. Du kannst die Reihenfolge bzw.
       das Suchmuster ändern oder sogar neue Dateiendung hinzufügen. Bitte konsolidiere
       die Dokumentation, um mehr über dieses und andere Features zu erfahren.
-    FileDoesNotExist: Datei ''%{0}'' existiert nicht.
+    FileDoesNotExist: Datei ''%{file}'' existiert nicht.
     CommandNotFound: Es tut mir Leid, aber die Anweisung der Aufgabe ''%{0}'' konnte
       nicht gefunden werden. Bist du dir sicher, dass die Anweisung ''%{1}'' korrekt
       oder über die Systempfade zugänglich ist?
@@ -68,7 +64,7 @@ de:
       bereitgestellt wird.
     InvalidLanguageConfigurationFile: 'Housten, wir haben ein Problem. Leider ist
       die in der Konfigurationsdatei spezifizierte Sprache nicht zulässig. Momentan
-      kann arara die folgenden Sprachen unterstützen: %{0}. Stelle sicher, dass eine
+      kann arara die folgenden Sprachen unterstützen: %{languages}. Stelle sicher, dass eine
       gültige Sprache gewählt wird oder entferne den Eintrag aus deiner Konfigurationsdatei
       (der Sprachschlüssel ist optional), ansonsten kann arara nicht ausgeführt werden.'
     InvalidFiletypesConfigurationFile: Es tut mir Leid, aber es scheint, dass du eine

@@ -2,7 +2,7 @@
 fr:
   log:
     WelcomeMessage: ''
-    ProcessingFile: Traitement du fichier ''%{0}'', veuillez patienter.
+    ProcessingFile: Traitement du fichier ''%{file}'', veuillez patienter.
     Done: Terminé.
     ExceptionRaised: 'Arara a généré une erreur avec le message suivant :'
     ReadyToRunCommands: Prêt à executer des commandes.
@@ -16,7 +16,7 @@ fr:
       : %{1}"
     DirectiveFound: Instruction trouvée à la ligne %{0} avec %{1}.
     RuleFound: Tâche ''%{0}'' trouvée dans ''%{1}''.
-    NoDirectivesFound: Aucune instructions trouvées dans ''%{0}''.
+    NoDirectivesFound: Aucune instructions trouvées dans ''%{file}''.
   help:
     Version: affiche la version de l'application
     Help: affiche le message d'aide
@@ -32,11 +32,7 @@ fr:
   msg:
     NoDirectivesFound: Je n''ai trouvé aucunes instructions dans ''%{0}'', aussi n''ai-je
       rien fait. Est-ce réellment ce que vous vouliez ?
-    SpecialThanks: Un remerciement spécial pour Alan Munn, Andrew Stacey, Brent Longborough,
-      Christopher Hughes, Clemens Niederberger, David Carlisle, Enrico Gregorio, Francesco
-      Endrici, Gonzalo Medina, Harish Kumar, Heiko Oberdiek, İlhan Polat, Joseph Wright,
-      Marco Daniel, Mikaël Maunier, Nicola Talbot, Patrick Gundlach, Rasmus Roulund,
-      Sergey Ulyanov, Stefan Kottwitz, et de nombreux autres qui ont rendu possible
+    SpecialThanks: Un remerciement spécial pour %{contributors}, et de nombreux autres qui ont rendu possible
       la création de cet humble outil.
     RunningCommand: Execution de %{0}...
     Success: SUCCÈS
@@ -54,7 +50,7 @@ fr:
       pouvez modifier l''ordre, le motif pour la recherche ou même ajouter de nouvelles
       extensions par le biais du fichier de configuration. Merci de vous référer au
       manuel d'arara pour en apprendre plus sur cette caractéristique.
-    FileDoesNotExist: Le fichier ''%{0}'' n''existe pas.
+    FileDoesNotExist: Le fichier ''%{file}'' n''existe pas.
     CommandNotFound: "\\nJe suis navré, mais la commande en provenance de la tâche
       ''%{0}'' n''a pas été trouvée. Êtes-vous sur(e) que la commande ''%{1}'' est
       correcte et accessible depuis le PATH ?"
@@ -68,7 +64,7 @@ fr:
       pas continuer tant qu'un fichier de configuration correct ne sera pas disponible.
     InvalidLanguageConfigurationFile: 'Houston, nous avons un problème. C''''est triste
       à dire mais le langage définit dans le fichier de configuration est incorrect.
-      Pour l''''instant, arara supporte les langages suivants : %{0}. Soyez sur(e)
+      Pour l''''instant, arara supporte les langages suivants : %{languages}. Soyez sur(e)
       de choisir un langage correct ou de retirer l''''entrée du fichier de configuration
       (le champ est optionnel), sinon arara ne pourra pas continuer.'
     InvalidFiletypesConfigurationFile: Je suis navré mais il semble que votre fichier

@@ -2,7 +2,7 @@
 ru:
   log:
     WelcomeMessage: "Добро пожаловать в arara %{0}!"
-    ProcessingFile: "Обработка файла ''%{0}'', пожалуйста, подождите."
+    ProcessingFile: "Обработка файла '%{file}', пожалуйста, подождите."
     Done: "Завершено."
     ExceptionRaised: 'Arara выдала исключение со следующим сообщением:'
     ReadyToRunCommands: "Готов к запуску команд."
@@ -29,13 +29,9 @@ ru:
     Slogan: "Крутой инструмент автоматизации TeX"
     AllRightsReserved: "Все права защищены."
   msg:
-    NoDirectivesFound: "Я не могу найти ни одной директивы в ''%{0}'', и поэтому не
+    NoDirectivesFound: "Я не могу найти ни одной директивы в '%{file}', и поэтому не
       могу ничего выполнить. Это действительно то, что вы хотели?"
-    SpecialThanks: "Особая благодарность выражается Alan Munn, Andrew Stacey, Brent
-      Longborough, Christopher Hughes, Clemens Niederberger, David Carlisle, Enrico
-      Gregorio, Francesco Endrici, Gonzalo Medina, Harish Kumar, Heiko Oberdiek, İlhan
-      Polat, Joseph Wright, Marco Daniel, Mikaël Maunier, Nicola Talbot, Patrick Gundlach,
-      Rasmus Roulund, Sergey Ulyanov, Stefan Kottwitz и многим другим, благодаря кому
+    SpecialThanks: "Особая благодарность выражается %{contributors} и многим другим, благодаря кому
       стало возможным создание этого скромного инструмента."
     RunningCommand: "Выполнение %{0}..."
     Success: "УСПЕШНО"
@@ -53,7 +49,7 @@ ru:
       порядок, образец поиска или даже добавить поддержку новых расщирений через файл
       конфигурации. Пожалуйста, обратитесь к руководству arara, что бы узнать больше
       об этой возможности."
-    FileDoesNotExist: "Файл ''%{0}'' не существует."
+    FileDoesNotExist: "Файл '%{file}' не существует."
     CommandNotFound: "= \\nК сожалению, команда из задачи ''%{0}'' не найдена. Вы
       уверены, что команда ''%{1}'' корректна или же доступна из системного пути?"
     InvalidYAMLConfigurationFile: "К сожалению, ваш файл конфигурации arara, по всей
@@ -65,7 +61,7 @@ ru:
       работу, пока не будет предоставлен корректный файл конфигурации."
     InvalidLanguageConfigurationFile: "Хьюстон, у нас проблема. К сожалению, язык,
       установленный в файле конфигурации не является допустимым. В настоящее время
-      arara может предоставить поддержку следующих языков: %{0}. Удостоверьтесь, что
+      arara может предоставить поддержку следующих языков: %{languages}. Удостоверьтесь, что
       выбран допустимый язык или запись удалена из конфигурационного файла (поле не
       является обязательным), в противном случае arara не сможет продолжить работу."
     InvalidFiletypesConfigurationFile: "К сожалению, видимо, в вашем файле конфигурации

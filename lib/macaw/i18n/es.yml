@@ -2,7 +2,7 @@
 es:
   log:
     WelcomeMessage: ''
-    ProcessingFile: Procesando el archivo ''%{0}'', por favor espere.
+    ProcessingFile: Procesando el archivo '%{file}', por favor espere.
     Done: Listo.
     ExceptionRaised: 'Arara generó una excepción con el siguiente mensaje:'
     ReadyToRunCommands: Listo para ejecutar comandos.
@@ -16,7 +16,7 @@ es:
       %{1}"
     DirectiveFound: Directiva encontrada en la línea %{0} con %{1}.
     RuleFound: Tarea ''%{0}'' encontrada en ''%{1}''.
-    NoDirectivesFound: No se encontraron directivas en ''%{0}''.
+    NoDirectivesFound: No se encontraron directivas en '%{0}'.
   help:
     Version: imprime la versión de la aplicación
     Help: imprime el mensaje de ayuda
@@ -30,13 +30,9 @@ es:
     Slogan: The cool TeX automation tool
     AllRightsReserved: Todos los derechos reservados.
   msg:
-    NoDirectivesFound: No encontré directivas en ''%{0}'', por lo que no ejecuté ninguna
+    NoDirectivesFound: No encontré directivas en '%{file}', por lo que no ejecuté ninguna
       acción. ¿Era esto lo que realmente deseaba?
-    SpecialThanks: Un agradecimiento especial a Alan Munn, Andrew Stacey, Brent Longborough,
-      Christopher Hughes, Clemens Niederberger, David Carlisle, Enrico Gregorio, Francesco
-      Endrici, Gonzalo Medina, Harish Kumar, Heiko Oberdiek, İlhan Polat, Joseph Wright,
-      Marco Daniel, Mikaël Maunier, Nicola Talbot, Patrick Gundlach, Rasmus Roulund,
-      Sergey Ulyanov, Stefan Kottwitz, y a muchos otros por hacer posible esta herramienta.
+    SpecialThanks: Un agradecimiento especial a %{contributors}, y a muchos otros por hacer posible esta herramienta.
     RunningCommand: Ejecutando %{0}...
     Success: "ÉXITO"
     Failure: FALLO
@@ -53,7 +49,7 @@ es:
       en ese orden. El orden y los patrones de búsqueda se pueden modificar, incluso
       se puede agregar soporte para nuevas extensiones, utilizando el archivo de configuración.
       Por favor consulte el manual de arara para mayor información.
-    FileDoesNotExist: El archivo ''%{0}'' no existe.
+    FileDoesNotExist: El archivo '%{file}' no existe.
     CommandNotFound: "\\nLo siento, pero el comando para la tarea ''%{0}'' no se encontró.
       Asegúrese de que el comando ''%{1}'' sea correcto y accesible desde la ruta
       (''path'') del sistema."
@@ -67,7 +63,7 @@ es:
       no puede continuar a menos que el archivo de configuración sea correcto."
     InvalidLanguageConfigurationFile: "!Houston, tenemos un problema! Lamentablemente,
       el idioma configurado en el archivo de configuración no es válido. Actualemente
-      arara soporta los siguientes idiomas: %{0}. Asegúrese de escoger un idioma válido
+      arara soporta los siguientes idiomas: %{languages}. Asegúrese de escoger un idioma válido
       o suprima la entrada del archivo de configuración (el campo es opcional), de
       lo contrario, arara no podrá continuar."
     InvalidFiletypesConfigurationFile: Lo siento, pero parece que el archivo de configuración
