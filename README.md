@@ -13,7 +13,15 @@ To install, make sure you have Ruby 1.9 or later installed, and then (on a comma
 
 In day-to-day use it will (should) behave exactly like arara. It accepts the same command line parameters and reads the
 same *standard* rules that are bundled with arara; if you use only those, there's no need to change anything in your
-LaTeX documents.
+LaTeX documents. Instead of
+
+    arara
+
+you call
+
+    macaw
+
+(or macaw.bat if you want to run it from a Windows IDE)
 
 ## Custom rules
 
