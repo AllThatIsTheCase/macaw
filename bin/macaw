@@ -204,7 +204,7 @@ class Macaw
     @@log
   end
 
-  def self.system(cmd)
+  def self.system(cmd, failonerror=true)
     cmd = cmd.compact.join(' ') if cmd.is_a?(Array)
     puts cmd
 
@@ -219,11 +219,11 @@ class Macaw
           end
 
           exit_status = wait_thr.value
-          error "cmd failed: #{cmd}" unless exit_status.success?
+          error "cmd failed: #{cmd}" unless exit_status.success? && failonerror
         end
       }
     rescue Timeout::Error
-      error "#{cmd}: timed out after #{@@options[:timeout]} seconds"
+      error "#{cmd}: timed out after #{@@options[:timeout]} seconds" if failonerror
     end
     return output
   end
