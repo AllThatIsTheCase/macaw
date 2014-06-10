@@ -21,6 +21,6 @@ end
 
 task :test do
   sh "cp test/test.tex ."
-  sh "./bin/macaw test"
+  sh "./bin/macaw -p -l"
   sh "rm test.*"
 end

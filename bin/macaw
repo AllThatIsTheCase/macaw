@@ -170,6 +170,10 @@ class Macaw
   def self.run
     @@options ||= options!
 
+    if ARGV.size == 0 && Dir['*.tex'].size == 1
+      puts "No TeX file offered, defaulting to #{Dir['*.tex'][0]}"
+      ARGV.push(Dir['*.tex'][0])
+    end
     error("No filename to process") if ARGV.size == 0
     error("Expected exactly one filename to process #{ARGV.inspect}") if ARGV.size != 1
     tex = File.file?(ARGV[0]) ? ARGV[0] : ARGV[0] + '.tex'
