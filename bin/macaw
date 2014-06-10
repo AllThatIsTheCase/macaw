@@ -148,7 +148,7 @@ class Macaw
   end
   attr_reader :file, :base
 
-  ERRORMODES=%i{exit throw ignore}
+  ERRORMODES=[:exit, :throw, :ignore]
   def self.error(msg, onfail=:exit)
     throw "errormode can only be #{ERRORMODES.inspect}" unless ERRORMODES.include?(onfail)
     case onfail
