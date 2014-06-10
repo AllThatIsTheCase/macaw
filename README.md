@@ -9,6 +9,11 @@ To install, make sure you have Ruby 1.9 or later installed, and then (on a comma
 
     gem install macaw-ruby
 
+To update Macaw, you type
+
+    gem update macaw-ruby
+    gem cleanup macaw-ruby
+
 ## Usage
 
 In day-to-day use it will (should) behave exactly like Arara. It accepts the same command line parameters and reads the
