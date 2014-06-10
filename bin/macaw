@@ -186,8 +186,12 @@ class Macaw
     macaw = Macaw.new(tex)
     @@log = File.open(macaw.base + '.log', 'w') if @@options.log
 
-    IO.readlines(tex).each{|line|
+    executed = 0
+    IO.readlines(tex).each_with_index{|line, lineno|
+      @@lineno = lineno + 1
+
       next unless line =~ /^% arara: /
+      executed += 1
       line.strip!
       line.sub!(/^%\s+arara\s*:\s*/, '')
       data = line.split(':', 2).collect{|v| v.strip}
@@ -222,7 +226,11 @@ class Macaw
       macaw.send(cmd, *accept.collect{|k, v| params[v.to_s]})
     }
 
-    puts I18n.t('log.Done')
+    if executed == 0
+      puts I18n.t('log.NoDirectivesFound', file: tex)
+    else
+      puts I18n.t('log.Done')
+    end
   end
 
   def self.log(line, force=false)

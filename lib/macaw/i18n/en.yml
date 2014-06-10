@@ -31,7 +31,7 @@ en:
     Slogan: The cool TeX automation tool
     AllRightsReserved: All rights reserved.
   msg:
-    NoDirectivesFound: I didn''t find any directives in ''%{0}'', and so didn''t do
+    NoDirectivesFound: I didn''t find any directives in '%{file}', and so didn't do
       anything. Is that what you really wanted?
     SpecialThanks: A special thanks goes to %{contributors}, and many others for making this humble tool possible.
     RunningCommand: Running %{0}...
