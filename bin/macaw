@@ -153,7 +153,7 @@ class Macaw
         puts "\n\n#{msg}"
         exit 1
       when :throw
-        throw msg
+        raise CommandlineError, msg
       else
         puts msg
     end
@@ -207,12 +207,13 @@ class Macaw
       unexpected = params.keys.collect{|k| k.intern} - (required + optional)
       error "#{line}: unexpected parameter#{unexpected.size > 1 ? 's' : ''}: #{unexpected.inspect}" if unexpected.size > 0
 
+      puts "\n** #{line} **\n"
       macaw.send(cmd, *accept.collect{|k, v| params[v.to_s]})
     }
   end
 
-  def self.log(line)
-    puts line if @@options[:verbose]
+  def self.log(line, force=false)
+    puts line if @@options[:verbose] || force
     @@log.write(line) if @@log
   end
 
@@ -220,7 +221,7 @@ class Macaw
     throw "errormode can only be #{ERRORMODES.inspect}" unless ERRORMODES.include?(onfail)
 
     cmd = cmd.compact.join(' ') if cmd.is_a?(Array)
-    puts cmd
+    log(cmd)
 
     output = ''
     begin
@@ -242,7 +243,7 @@ class Macaw
   end
 
   def self.load_rules
-    CONFIG['paths'].each{|path| puts path; require_all path} if CONFIG['paths']
+    CONFIG['paths'].each{|path| require_all path} if CONFIG['paths']
   end
 end
 
