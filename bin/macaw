@@ -74,7 +74,7 @@ def options!
         options[:log] = v
       }
 
-      parser.on('-t', '--timeout SECONDS', I18n.t('help.Timeout')){|timeout|
+      parser.on('-t', '--timeout MILLISECONDS', I18n.t('help.Timeout')){|timeout|
         options[:timeout] = Float(timeout) / 1000
       }
 
