@@ -118,7 +118,7 @@ class LanguageManager
           next
         end
 
-        puts "Var mismatch: #{l.keys[0]}: #{k.join('.')}; #{vars(ens).inspect} vs #{vars(ls).inspect}" if vars(ens) != vars(ls)
+        puts "Var mismatch: #{l.keys[0]}: #{k.join('.')}\n  #{vars(ens).inspect}\n  #{vars(ls).inspect}" if vars(ens) != vars(ls)
       }
     }
   end
