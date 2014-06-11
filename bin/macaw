@@ -51,7 +51,7 @@ def options!
   options = {}
   [true, false].collect{|dryrun|
     opts = OptionParser.new{|parser|
-      parser.banner = "#{I18n.t('help.usage')}: macaw [options] FILE"
+      parser.banner = "#{I18n.t('help.Usage')}: macaw [options] FILE"
       parser.separator ""
 
       options[:language] = I18n.default_locale

@@ -2,21 +2,21 @@
 pt-BR:
   log:
     WelcomeMessage: ''
-    ProcessingFile: Processando o arquivo ''%{0}''; por favor, aguarde.
+    ProcessingFile: Processando o arquivo "%{file}"; por favor, aguarde.
     Done: Concluído.
-    ExceptionRaised: 'Arara gerou uma exceção com a seguinte mensagem:'
+    ExceptionRaised: 'Macaw gerou uma exceção com a seguinte mensagem:'
     ReadyToRunCommands: Pronto para executar comandos.
-    CommandName: Executando ''%{0}''.
+    CommandName: Executando "%{0}".
     Command: 'Comando: %{0}'
-    CommandSuccess: "''%{0}'' foi executado com sucesso."
-    CommandFailure: "''%{0}'' retornou um status de erro."
+    CommandSuccess: '"%{0}" foi executado com sucesso.'
+    CommandFailure: '"%{0}" retornou um status de erro.'
     AllCommandsSuccess: Todos os comandos foram executados com sucesso.
     OutputLogging: 'Registro de saída:'
-    CommandNotFound: "''%{0}'' não foi encontrado no caminho do sistema. Tentativa
-      de execução: %{1}"
+    CommandNotFound: '"%{0}" não foi encontrado no caminho do sistema. Tentativa de
+      execução: %{1}'
     DirectiveFound: Diretiva encontrada na linha %{0} com %{1}.
-    RuleFound: Tarefa ''%{0}'' encontrada em ''%{1}''.
-    NoDirectivesFound: Nenhuma diretiva foi encontrada em ''%{0}''.
+    RuleFound: Tarefa "%{0}" encontrada em "%{1}".
+    NoDirectivesFound: Nenhuma diretiva foi encontrada em "%{0}".
   help:
     Version: imprime a versão da aplicação
     Help: imprime a mensagem de ajuda
@@ -26,18 +26,16 @@ pt-BR:
     Language: define o idioma da aplicação
     DryRun: ''
     MaximumNumberOfLoops: ''
+    Usage: Usage
+    Progress: Print dots to mark progress
   header:
     Slogan: A ferramenta legal de automação TeX
     AllRightsReserved: Todos os direitos reservados.
   msg:
-    NoDirectivesFound: Eu não encontrei nenhuma diretiva em ''%{0}'', e então não
+    NoDirectivesFound: Eu não encontrei nenhuma diretiva em "%{file}", e então não
       fiz absolutamente nada. É isso que você realmente queria?
-    SpecialThanks: Um agradecimento especial aos amigos Alan Munn, Andrew Stacey,
-      Brent Longborough, Christopher Hughes, Clemens Niederberger, David Carlisle,
-      Enrico Gregorio, Francesco Endrici, Gonzalo Medina, Harish Kumar, Heiko Oberdiek,
-      İlhan Polat, Joseph Wright, Marco Daniel, Mikaël Maunier, Nicola Talbot, Patrick
-      Gundlach, Rasmus Roulund, Sergey Ulyanov, Stefan Kottwitz, e muitos outros por
-      tornar possível esta humilde ferramenta.
+    SpecialThanks: Um agradecimento especial aos amigos %{contributors}, e muitos
+      outros por tornar possível esta humilde ferramenta.
     RunningCommand: Executando %{0}...
     Success: SUCESSO
     Failure: FRACASSO
@@ -47,108 +45,107 @@ pt-BR:
     Problem: 'Problema: %{0}'
     ErrorLocation: Erro encontrado na linha %{0}, coluna %{1}.
   error:
-    FileDoesNotExistWithExtensionsList: Sinto muito, mas o arquivo ''%{0} %{1}'' não
+    FileDoesNotExistWithExtensionsList: Sinto muito, mas o arquivo "%{0} %{1}" não
       existe. Observe que se você fornecer apenas o nome base (isto é, o nome do arquivo
-      sem a extensão) ou com uma extensão desconhecida, arara tentará encontrar arquivos
+      sem a extensão) ou com uma extensão desconhecida, macaw tentará encontrar arquivos
       terminados com as extensões predefinidas %{1} nesta ordem. Você pode alterar
       a ordem, o padrão de busca ou mesmo adicionar suporte para novas extensões através
       do arquivo de configuração. Por favor, verifique o manual para aprender mais
       sobre essa funcionalidade.
-    FileDoesNotExist: O arquivo ''%{0}'' não existe.
-    CommandNotFound: "\\nSinto muito, mas o comando da tarefa ''%{0}'' não foi encontrado.
-      Você tem certeza de que ''%{1}'' está correto, ou mesmo acessível a partir do
-      caminho do sistema?"
+    FileDoesNotExist: O arquivo "%{file}" não existe.
+    CommandNotFound: |2-
+
+      Sinto muito, mas o comando da tarefa "%{0}" não foi encontrado. Você tem certeza de que "%{1}" está correto, ou mesmo acessível a partir do caminho do sistema?
     InvalidYAMLConfigurationFile: 'Sinto muito, mas aparentemente o seu arquivo de
-      configuração arara é inválido, isto é, contém entradas YAML inválidas ou inexistentes.
-      Infelizmente, arara não pode prosseguir até que o erro seja reparado. Fiz o
+      configuração macaw é inválido, isto é, contém entradas YAML inválidas ou inexistentes.
+      Infelizmente, macaw não pode prosseguir até que o erro seja reparado. Fiz o
       meu melhor para exibir a mensagem de erro; aqui está:'
     InvalidConfigurationFile: Uh-oh, o arquivo de configuração parece ser inválido.
-      Você tem certeza de que ele é um arquivo YAML adequado? Infelizmente, arara
+      Você tem certeza de que ele é um arquivo YAML adequado? Infelizmente, macaw
       não pode prosseguir até que um arquivo de configuração válido seja fornecido.
     InvalidLanguageConfigurationFile: 'Houston, temos um problema. Infelizmente, o
-      idioma definido no arquivo de configuração não é válido. No momento, arara oferece
-      suporte para os seguintes idiomas: %{0}. Certifique-se de ter escolhido um idioma
-      válido, ou remova a entrada do arquivo de configuração (o campo é opcional).
-      Caso contrário arara não poderá prosseguir.'
+      idioma definido no arquivo de configuração não é válido. No momento, macaw oferece
+      suporte para os seguintes idiomas: %{languages}. Certifique-se de ter escolhido
+      um idioma válido, ou remova a entrada do arquivo de configuração (o campo é
+      opcional). Caso contrário macaw não poderá prosseguir.'
     InvalidFiletypesConfigurationFile: Sinto muito, mas parece que o seu arquivo de
       configuração tem tipos de arquivos personalizados sem a extensão ou o padrão
-      de busca definidos. Ambos são requeridos para que arara prossiga. Por favor,
+      de busca definidos. Ambos são requeridos para que macaw prossiga. Por favor,
       conserte o erro no seu arquivo de configuração e tente novamente.
     PathRuntimeErrorConfigurationFile: 'Sinto muito, mas uma das entradas do caminho
       de busca no seu arquivo de configuração tem uma variável não resolvida no contexto
-      do caminho: ''''%{0}'''''
+      do caminho: "%{0}"'
+    PathIOErrorConfigurationFile: Sinto muito, mas uma das entradas do caminho de
+      busca no seu arquivo de configuração tem uma estrutura de diretório malformada.
+      Você poderia dar uma olhadinha?
     InvalidYAMLDirective: 'Parece que existe uma diretiva malformada encontrada na
       linha %{0}, isto é, uma diretiva que pode ter um erro na sintaxe YAML ou um
       campo inválido. Fiz o meu melhor para exibir a mensagem de erro; aqui está:'
-    DirectiveEmptyCurlyBrackets: A diretiva ''%{0}'' na linha %{1} tem chaves vazias.
-      Observe que arara opta por uma sintaxe mais limpa quando uma diretiva não tem
+    DirectiveEmptyCurlyBrackets: A diretiva "%{0}" na linha %{1} tem chaves vazias.
+      Observe que macaw opta por uma sintaxe mais limpa quando uma diretiva não tem
       parâmetros. Para repará-la, é suficiente remover as chaves ou fornecer os argumentos
       para a diretiva.
-    DirectiveInvalidArgumentList: A diretiva ''%{0}'' na linha %{1} tem um tipo de
-      argumento inválido. O argumento ''%{2}'' é uma palavra reservada arara e sempre
-      requer uma lista.
-    DirectiveReservedKeyword: A diretiva ''%{0}'' na linha %{1} tem um nome de argumento
-      inválido. O nome ''%{2}'' é uma palavra reservada arara representando cada elemento
-      na lista ''%{3}''. Por favor, escolha um outro nome para esse argumento.
-    DirectiveListError: A diretiva ''%{0}'' na linha %{1} tem um tipo de argumento
-      inválido. Apenas os argumentos ''files'' e ''items'' podem conter uma lista.
-      Ambos são palavras reservadas arara.
+    DirectiveInvalidArgumentList: A diretiva "%{0}" na linha %{1} tem um tipo de argumento
+      inválido. O argumento "%{2}" é uma palavra reservada macaw e sempre requer uma
+      lista.
+    DirectiveReservedKeyword: A diretiva "%{0}" na linha %{1} tem um nome de argumento
+      inválido. O nome "%{2}" é uma palavra reservada macaw representando cada elemento
+      na lista "%{3}". Por favor, escolha um outro nome para esse argumento.
+    DirectiveListError: A diretiva "%{0}" na linha %{1} tem um tipo de argumento inválido.
+      Apenas os argumentos "files" e "items" podem conter uma lista. Ambos são palavras
+      reservadas macaw.
     InvalidDirective: Aparentemente, existe uma diretiva inválida na linha %{0}. Por
       favor, dê uma olhadinha e conserte a diretiva.
-    DirectiveGenericError: A diretiva ''%{0}'' na linha %{1} parece ser malformada.
+    DirectiveGenericError: A diretiva "%{0}" na linha %{1} parece ser malformada.
       Pode ser um erro na sintaxe YAML ou um mapeamento incorreto.
     InvalidLanguage: 'Sinto muito, mas o código de idioma que você escolheu é inválido.
       No momento, os seguintes idiomas são suportados:'
-    RuleNotFound: Uh-oh, eu não consegui encontrar a regra ''%{0}'' no caminho de
-      busca. Você poderia conferir se o nome da regra está correto e se a regra é
-      acessível a partir do caminho de busca?
-    InvalidYAMLRule: 'Parece que a tarefa ''''%{0}'''' tem um erro na sintaxe YAML
-      ou um campo inválido. Você poderia dar uma olhadinha no arquivo ''''%{0}.yaml''''
-      localizado em ''''%{1}''''? Fiz o meu melhor para exibir a mensagem de erro;
-      aqui está:'
-    InvalidRule: Uh-oh, a tarefa ''%{0}'' parece ser inválida. Você tem certeza de
-      que o arquivo ''%{0}.yaml'' localizado em ''%{1}'' é um arquivo YAML apropriado?
-    EmptyIdentifierRule: Um problema foi detectado na tarefa ''%{0}''. O arquivo ''%{0}.yaml''
-      localizado em ''%{1}'' requer um identificador válido. Você pode consertá-lo?
-    EmptyNameRule: Um problema foi detectado na tarefa ''%{0}''. O arquivo ''%{0}.yaml''
-      localizado em ''%{1}'' requer um nome válido. Você pode consertá-lo?
-    ForbiddenIdentifierRule: Uh-oh, a tarefa ''%{0}'' (referenciando o arquivo ''%{0}.yaml''
-      localizado em ''%{1}'') tem um identificador de argumento inválido. ''%{2}''
-      é uma palavra reservada, portanto não pode ser utilizada. Você poderia utilizar
-      outro nome?
-    EmptyArgumentsListRule: 'Um problema foi detectado na tarefa ''''%{0}''''. O arquivo
-      ''''%{0}.yaml'''' localizado em ''''%{1}'''' requer uma lista válida de argumentos.
-      Você pode consertá-lo? Observe que a lista de argumentos também pode ser vazia,
-      mas mesmo assim é necessário definí-la explicitamente (com ''''arguments: []'''').'
-    WrongIdentifierRule: Uh-oh, a tarefa ''%{0}'' (referenciando o arquivo ''%{0}.yaml''
-      localizado em ''%{1}'') tem o identificador incorreto - era esperado ''%{0}'',
-      ao invés de ''%{2}''. Você pode consertá-lo?
-    ArgumentsNotDefinedInRule: 'Uh-oh, existem argumentos utilizados na diretiva ''''%{0}''''
-      que não estão definidos na regra ''''%{0}.yaml'''' localizada em ''''%{1}''''.
-      Você pode remover esses argumentos inexistentes da diretiva ''''%{0}'''' ou
-      adicioná-los à lista de argumentos na regra ''''%{0}.yaml''''. Aqui estão eles:
-      %{2}'
+    RuleNotFound: Uh-oh, eu não consegui encontrar a regra "%{0}" no caminho de busca.
+      Você poderia conferir se o nome da regra está correto e se a regra é acessível
+      a partir do caminho de busca?
+    InvalidYAMLRule: 'Parece que a tarefa "%{0}" tem um erro na sintaxe YAML ou um
+      campo inválido. Você poderia dar uma olhadinha no arquivo "%{0}.yaml" localizado
+      em "%{1}"? Fiz o meu melhor para exibir a mensagem de erro; aqui está:'
+    InvalidRule: Uh-oh, a tarefa "%{0}" parece ser inválida. Você tem certeza de que
+      o arquivo "%{0}.yaml" localizado em "%{1}" é um arquivo YAML apropriado?
+    EmptyIdentifierRule: Um problema foi detectado na tarefa "%{0}". O arquivo "%{0}.yaml"
+      localizado em "%{1}" requer um identificador válido. Você pode consertá-lo?
+    EmptyNameRule: Um problema foi detectado na tarefa "%{0}". O arquivo "%{0}.yaml"
+      localizado em "%{1}" requer um nome válido. Você pode consertá-lo?
+    ForbiddenIdentifierRule: Uh-oh, a tarefa "%{0}" (referenciando o arquivo "%{0}.yaml"
+      localizado em "%{1}") tem um identificador de argumento inválido. "%{2}" é uma
+      palavra reservada, portanto não pode ser utilizada. Você poderia utilizar outro
+      nome?
+    EmptyArgumentsListRule: 'Um problema foi detectado na tarefa "%{0}". O arquivo
+      "%{0}.yaml" localizado em "%{1}" requer uma lista válida de argumentos. Você
+      pode consertá-lo? Observe que a lista de argumentos também pode ser vazia, mas
+      mesmo assim é necessário definí-la explicitamente (com "arguments: []").'
+    WrongIdentifierRule: Uh-oh, a tarefa "%{0}" (referenciando o arquivo "%{0}.yaml"
+      localizado em "%{1}") tem o identificador incorreto - era esperado "%{0}", ao
+      invés de "%{2}". Você pode consertá-lo?
+    ArgumentsNotDefinedInRule: 'Uh-oh, existem argumentos utilizados na diretiva "%{0}"
+      que não estão definidos na regra "%{0}.yaml" localizada em "%{1}". Você pode
+      remover esses argumentos inexistentes da diretiva "%{0}" ou adicioná-los à lista
+      de argumentos na regra "%{0}.yaml". Aqui estão eles: %{2}'
     DefaultValueRuntimeErrorRule: 'Sinto muito, mas o valor padrão definido para o
-      argumento ''''%{0}'''' da tarefa ''''%{1}'''' (referenciando o arquivo ''''%{1}.yaml''''
-      localizado em ''''%{2}'''') tem uma variável ou método indisponível no contexto
-      da regra: ''''%{3}'''''
-    FlagRuntimeErrorRule: 'Sinto muito, mas a flag definida para o argumento ''''%{0}''''
-      da tarefa ''''%{1}'''' (referenciando o arquivo ''''%{1}.yaml'''' localizado
-      em ''''%{2}'''') tem uma variável ou método indisponível no contexto da regra:
-      ''''%{3}'''''
-    DuplicatedCommandElementsRule: Uh-oh, os campos ''command'' e ''commands'' estão
-      definidos ao mesmo tempo na tarefa ''%{0}'' (referenciando o arquivo ''%{0}.yaml''
-      localizado em ''%{1}''). Você precisa escolher apenas um deles. Se a sua regra
-      precisa de apenas um comando, você pode optar por ''command''; se a sua regra
-      requer um conjunto de comandos, talvez o campo ''commands'' seja mais adequado.
-    MissingCommandElementsRule: Uh-oh, a tarefa ''%{0}'' (referenciando o arquivo
-      ''%{0}.yaml'' localizado em ''%{1}'') não possui o elemento ''command'' ou ''commands''.
-      Você precisa escolher um deles. Se a sua regra precisa de apenas um comando,
-      você pode optar por ''command''; se a sua regra requer um conjunto de comandos,
-      talvez o campo ''commands'' seja mais adequado.
-    CommandRuntimeErrorRule: 'Sinto muito, mas o conjunto de comandos da tarefa ''''%{0}''''
-      (referenciando o arquivo ''''%{0}.yaml'''' localizado em ''''%{1}'''') tem uma
-      variável ou método indisponível no contexto da regra: ''''%{2}'''''
+      argumento "%{0}" da tarefa "%{1}" (referenciando o arquivo "%{1}.yaml" localizado
+      em "%{2}") tem uma variável ou método indisponível no contexto da regra: "%{3}"'
+    FlagRuntimeErrorRule: 'Sinto muito, mas a flag definida para o argumento "%{0}"
+      da tarefa "%{1}" (referenciando o arquivo "%{1}.yaml" localizado em "%{2}")
+      tem uma variável ou método indisponível no contexto da regra: "%{3}"'
+    DuplicatedCommandElementsRule: Uh-oh, os campos "command" e "commands" estão definidos
+      ao mesmo tempo na tarefa "%{0}" (referenciando o arquivo "%{0}.yaml" localizado
+      em "%{1}"). Você precisa escolher apenas um deles. Se a sua regra precisa de
+      apenas um comando, você pode optar por "command"; se a sua regra requer um conjunto
+      de comandos, talvez o campo "commands" seja mais adequado.
+    MissingCommandElementsRule: Uh-oh, a tarefa "%{0}" (referenciando o arquivo "%{0}.yaml"
+      localizado em "%{1}") não possui o elemento "command" ou "commands". Você precisa
+      escolher um deles. Se a sua regra precisa de apenas um comando, você pode optar
+      por "command"; se a sua regra requer um conjunto de comandos, talvez o campo
+      "commands" seja mais adequado.
+    CommandRuntimeErrorRule: 'Sinto muito, mas o conjunto de comandos da tarefa "%{0}"
+      (referenciando o arquivo "%{0}.yaml" localizado em "%{1}") tem uma variável
+      ou método indisponível no contexto da regra: "%{2}"'
     XMLFileNotFound: ''
     XMLBadEncoding: ''
     XMLMalformedFile: ''

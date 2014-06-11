@@ -1,7 +1,22 @@
 ---
 en:
+  log:
+    WelcomeMessage: Welcome to macaw %{0}!
+    ProcessingFile: Processing file "%{file}", please wait.
+    Done: Done.
+    ExceptionRaised: 'Macaw raised an exception with the following message:'
+    ReadyToRunCommands: Ready to run commands.
+    CommandName: Running "%{0}".
+    Command: 'Command: %{0}'
+    CommandSuccess: '"%{0}" was successfully executed.'
+    CommandFailure: '"%{0}" returned an error status.'
+    AllCommandsSuccess: All commands were successfully executed.
+    OutputLogging: 'Output logging:'
+    CommandNotFound: '"%{0}" was not found in the path. Execution attempt: %{1}'
+    DirectiveFound: Directive found in line %{0} with %{1}.
+    RuleFound: Task "%{0}" found in "%{1}".
+    NoDirectivesFound: No directives found in "%{0}".
   help:
-    usage: Usage
     Version: print the application version
     Help: print the help message
     Log: generate a log output
@@ -10,30 +25,16 @@ en:
     Language: set the application language
     DryRun: go through all the motions of running a command, but with no actual calls
     MaximumNumberOfLoops: set the maximum number of loops
-    Progress: print dots for progress
-  log:
-    WelcomeMessage: Welcome to arara %{0}!
-    ProcessingFile: Processing file '%{file}', please wait.
-    Done: Done.
-    ExceptionRaised: 'Arara raised an exception with the following message:'
-    ReadyToRunCommands: Ready to run commands.
-    CommandName: Running ''%{0}''.
-    Command: 'Command: %{0}'
-    CommandSuccess: "''%{0}'' was successfully executed."
-    CommandFailure: "''%{0}'' returned an error status."
-    AllCommandsSuccess: All commands were successfully executed.
-    OutputLogging: 'Output logging:'
-    CommandNotFound: "''%{0}'' was not found in the path. Execution attempt: %{1}"
-    DirectiveFound: Directive found in line %{0} with %{1}.
-    RuleFound: Task ''%{0}'' found in ''%{1}''.
-    NoDirectivesFound: No directives found in ''%{0}''.
+    Usage: Usage
+    Progress: Print dots to mark progress
   header:
     Slogan: The cool TeX automation tool
     AllRightsReserved: All rights reserved.
   msg:
-    NoDirectivesFound: I didn''t find any directives in '%{file}', and so didn't do
+    NoDirectivesFound: I didn"t find any directives in "%{file}", and so didn"t do
       anything. Is that what you really wanted?
-    SpecialThanks: A special thanks goes to %{contributors}, and many others for making this humble tool possible.
+    SpecialThanks: A special thanks goes to %{contributors}, and many others for making
+      this humble tool possible.
     RunningCommand: Running %{0}...
     Success: SUCCESS
     Failure: FAILURE
@@ -43,115 +44,114 @@ en:
     Problem: 'Problem: %{0}'
     ErrorLocation: Error found in line %{0}, column %{1}.
   error:
-    FileDoesNotExistWithExtensionsList: I'm sorry, but the file '%{0} %{1}' does
-      not exist. Note that when you provide only the basename (i.e, the filename without
-      the extension) or with an unknown extension, arara will try to look for files
+    FileDoesNotExistWithExtensionsList: I"m sorry, but the file "%{0} %{1}" does not
+      exist. Note that when you provide only the basename (i.e, the filename without
+      the extension) or with an unknown extension, macaw will try to look for files
       ending with the predefined extensions %{1} in that order. You can override the
       order, the search pattern or even add support for new extensions through the
-      configuration file. Please refer to the arara manual to learn more about this
+      configuration file. Please refer to the macaw manual to learn more about this
       feature.
-    FileDoesNotExist: File '%{file}' does not exist.
-    CommandNotFound: "\\nI''m sorry, but the command from the ''%{0}'' task could
-      not be found. Are you sure the command ''%{1}'' is correct, or even accessible
-      from the system path?"
-    InvalidYAMLConfigurationFile: 'I''m sorry, but apparently your arara configuration
+    FileDoesNotExist: File "%{file}" does not exist.
+    CommandNotFound: |2-
+
+      I"m sorry, but the command from the "%{0}" task could not be found. Are you sure the command "%{1}" is correct, or even accessible from the system path?
+    InvalidYAMLConfigurationFile: 'I''m sorry, but apparently your macaw configuration
       file is invalid, that is, it has invalid or missing YAML entries. Unfortunately,
-      arara cannot proceed until the error is fixed. I tried my best to dump the error
+      macaw cannot proceed until the error is fixed. I tried my best to dump the error
       message, so here it is:'
     InvalidConfigurationFile: Uh-oh, the configuration file appears to be invalid.
-      Are you sure it's a proper YAML file? Unfortunately, arara cannot proceed until
+      Are you sure it's a proper YAML file? Unfortunately, macaw cannot proceed until
       a proper configuration file is provided.
     InvalidLanguageConfigurationFile: 'Houston, we have a problem. Sadly, the language
-      set in the configuration file is not valid. Currently, arara can provide support
-      for the following languages: %{languages}. Make sure to choose a valid language or remove
-      the entry from the configuration file (the field is optional), otherwise arara
-      cannot proceed.'
+      set in the configuration file is not valid. Currently, macaw can provide support
+      for the following languages: %{languages}. Make sure to choose a valid language
+      or remove the entry from the configuration file (the field is optional), otherwise
+      macaw cannot proceed.'
     InvalidFiletypesConfigurationFile: I'm sorry, but it seems your configuration
       file has customized filetypes with neither the extension or pattern defined.
       Both are required in order to continue. Please fix this error in your configuration
       file and try again.
-    PathRuntimeErrorConfigurationFile: 'I''''m sorry, but one of the entries of the
-      search path in your configuration file has an unavailable variable in the path
-      context: ''''%{0}'''''
+    PathRuntimeErrorConfigurationFile: 'I"m sorry, but one of the entries of the search
+      path in your configuration file has an unavailable variable in the path context:
+      "%{0}"'
     PathIOErrorConfigurationFile: I'm sorry, but one of the entries of the search
       path in your configuration file has a malformed directory structure. Could you
       take a look at it?
     InvalidYAMLDirective: 'It appears there is a malformed directive found at line
       %{0}, that is, a directive that might have a YAML syntax error or an invalid
       field. I tried my best to dump the error message, so here it is:'
-    DirectiveEmptyCurlyBrackets: Directive ''%{0}'' at line %{1} has empty curly brackets.
-      Note that arara opts for a cleaner syntax when a directive has no parameters.
-      To fix it, it''s enough to either remove the curly brackets or provide the arguments
+    DirectiveEmptyCurlyBrackets: Directive "%{0}" at line %{1} has empty curly brackets.
+      Note that macaw opts for a cleaner syntax when a directive has no parameters.
+      To fix it, it"s enough to either remove the curly brackets or provide the arguments
       for the directive.
-    DirectiveInvalidArgumentList: Directive ''%{0}'' at line %{1} has an invalid argument
-      type. The argument ''%{2}'' is a reserved arara keyword and always requires
-      a list.
-    DirectiveReservedKeyword: Directive ''%{0}'' at line %{1} has an invalid argument
-      name. The name ''%{2}'' is a reserved arara keyword representing every element
-      in the ''%{3}'' list. Please, pick another name for that argument.
-    DirectiveListError: Directive ''%{0}'' at line %{1} has an invalid argument type.
-      Only the arguments ''files'' and ''items'' can have a list. Both are reserved
-      arara keywords.
-    InvalidDirective: Apparently, there''s an invalid directive at line %{0}. Please
+    DirectiveInvalidArgumentList: Directive "%{0}" at line %{1} has an invalid argument
+      type. The argument "%{2}" is a reserved macaw keyword and always requires a
+      list.
+    DirectiveReservedKeyword: Directive "%{0}" at line %{1} has an invalid argument
+      name. The name "%{2}" is a reserved macaw keyword representing every element
+      in the "%{3}" list. Please, pick another name for that argument.
+    DirectiveListError: Directive "%{0}" at line %{1} has an invalid argument type.
+      Only the arguments "files" and "items" can have a list. Both are reserved macaw
+      keywords.
+    InvalidDirective: Apparently, there"s an invalid directive at line %{0}. Please
       take a look and fix it.
-    DirectiveGenericError: Directive ''%{0}'' at line %{1} seems to be malformed.
-      It might be a YAML syntax error or a wrong mapping.
+    DirectiveGenericError: Directive "%{0}" at line %{1} seems to be malformed. It
+      might be a YAML syntax error or a wrong mapping.
     InvalidLanguage: 'I''m sorry, but the language code you chose is invalid. Currently,
       the following languages are supported:'
-    RuleNotFound: Uh-oh, I could not find the ''%{0}'' rule in the search path. Could
+    RuleNotFound: Uh-oh, I could not find the "%{0}" rule in the search path. Could
       you take a look if the rule name is correct and if the rule is accessible through
       the search path?
-    InvalidYAMLRule: 'It appears that the ''''%{0}'''' task has a YAML syntax error
-      or an invalid field. Could you take a look at the ''''%{0}.yaml'''' file located
-      at ''''%{1}''''. I tried my best to dump the error message, so here it is:'
-    InvalidRule: Uh-oh, the ''%{0}'' task appears to be invalid. Are you sure the
-      ''%{0}.yaml'' file located at ''%{1}'' is a proper YAML file?
-    EmptyIdentifierRule: A problem was detected in the ''%{0}'' task. The ''%{0}.yaml''
-      file located at ''%{1}'' requires a valid identifier. Could you fix it?
-    EmptyNameRule: A problem was detected in the ''%{0}'' task. The ''%{0}.yaml''
-      file located at ''%{1}'' requires a valid name. Could you fix it?
-    ForbiddenIdentifierRule: Uh-oh, the ''%{0}'' task (referencing the ''%{0}.yaml''
-      file located at ''%{1}'') has an invalid argument identifier. ''%{2}'' is a
-      reserved keyword, so it cannot be used. Could you use another name?
-    EmptyArgumentsListRule: 'A problem was detected in the ''''%{0}'''' task. The
-      ''''%{0}.yaml'''' file located at ''''%{1}'''' requires a valid list of arguments.
-      Could you fix it? Note that the list of arguments can also be empty, but it
-      is still necessary to define it explicitly (with ''''arguments: []'''').'
-    WrongIdentifierRule: Uh-oh, the ''%{0}'' task (referencing the ''%{0}.yaml'' file
-      located at ''%{1}'') has the wrong identifier - ''%{0}'' was expected, rather
-      than ''%{2}''. Could you fix it?
-    ArgumentsNotDefinedInRule: 'Oh no, there are arguments used in the diretive ''''%{0}''''
-      which are not defined in the ''''%{0}.yaml'''' rule located at ''''%{1}''''.
-      You can either remove them from the ''''%{0}'''' directive or add them to the
-      list of arguments in the ''''%{0}.yaml'''' rule. Here they are: %{2}'
-    DefaultValueRuntimeErrorRule: 'I''''m sorry, but the default value set for the
-      argument ''''%{0}'''' of the ''''%{1}'''' task (referencing the ''''%{1}.yaml''''
-      file located at ''''%{2}'''') has an unavailable variable/method in the rule
-      context: ''''%{3}'''''
-    FlagRuntimeErrorRule: 'I''''m sorry, but the flag set for the argument ''''%{0}''''
-      of the ''''%{1}'''' task (referencing the ''''%{1}.yaml'''' file located at
-      ''''%{2}'''') has an unavailable variable/method in the rule context: ''''%{3}'''''
-    DuplicatedCommandElementsRule: Uh-oh, both ''command'' and ''commands'' fields
-      are set in the ''%{0}'' task (referencing the ''%{0}.yaml'' file located at
-      ''%{1}''). You need to pick only one of them. If your task only relies on a
-      single command, you can opt for ''command''; if your rule requires a set of
-      commands, maybe the ''commands'' field is more suitable.
-    MissingCommandElementsRule: Uh-oh, the ''%{0}'' task (referencing the ''%{0}.yaml''
-      file located at ''%{1}'') does not have either the ''command'' or ''commands''
-      elements. You need to pick only one of them. If your task only relies on a single
-      command, you can opt for ''command''; if your rule requires a set of commands,
-      maybe the ''commands'' field is more suitable.
-    CommandRuntimeErrorRule: 'I''''m sorry, but the command set for the ''''%{0}''''
-      task (referencing the ''''%{0}.yaml'''' file located at ''''%{1}'''') has an
-      unavailable variable/method in the rule context: ''''%{2}'''''
-    XMLFileNotFound: I''m sorry, but I could not find ''%{0}'' in the current directory.
-    XMLBadEncoding: I''m sorry, but apparently ''%{0}'' has a bad encoding. Delete
-      the file and try again.
-    XMLMalformedFile: I''m sorry, but ''%{0}'' seems to be malformed. Delete the file
+    InvalidYAMLRule: 'It appears that the "%{0}" task has a YAML syntax error or an
+      invalid field. Could you take a look at the "%{0}.yaml" file located at "%{1}".
+      I tried my best to dump the error message, so here it is:'
+    InvalidRule: Uh-oh, the "%{0}" task appears to be invalid. Are you sure the "%{0}.yaml"
+      file located at "%{1}" is a proper YAML file?
+    EmptyIdentifierRule: A problem was detected in the "%{0}" task. The "%{0}.yaml"
+      file located at "%{1}" requires a valid identifier. Could you fix it?
+    EmptyNameRule: A problem was detected in the "%{0}" task. The "%{0}.yaml" file
+      located at "%{1}" requires a valid name. Could you fix it?
+    ForbiddenIdentifierRule: Uh-oh, the "%{0}" task (referencing the "%{0}.yaml" file
+      located at "%{1}") has an invalid argument identifier. "%{2}" is a reserved
+      keyword, so it cannot be used. Could you use another name?
+    EmptyArgumentsListRule: 'A problem was detected in the "%{0}" task. The "%{0}.yaml"
+      file located at "%{1}" requires a valid list of arguments. Could you fix it?
+      Note that the list of arguments can also be empty, but it is still necessary
+      to define it explicitly (with "arguments: []").'
+    WrongIdentifierRule: Uh-oh, the "%{0}" task (referencing the "%{0}.yaml" file
+      located at "%{1}") has the wrong identifier - "%{0}" was expected, rather than
+      "%{2}". Could you fix it?
+    ArgumentsNotDefinedInRule: 'Oh no, there are arguments used in the diretive "%{0}"
+      which are not defined in the "%{0}.yaml" rule located at "%{1}". You can either
+      remove them from the "%{0}" directive or add them to the list of arguments in
+      the "%{0}.yaml" rule. Here they are: %{2}'
+    DefaultValueRuntimeErrorRule: 'I"m sorry, but the default value set for the argument
+      "%{0}" of the "%{1}" task (referencing the "%{1}.yaml" file located at "%{2}")
+      has an unavailable variable/method in the rule context: "%{3}"'
+    FlagRuntimeErrorRule: 'I"m sorry, but the flag set for the argument "%{0}" of
+      the "%{1}" task (referencing the "%{1}.yaml" file located at "%{2}") has an
+      unavailable variable/method in the rule context: "%{3}"'
+    DuplicatedCommandElementsRule: Uh-oh, both "command" and "commands" fields are
+      set in the "%{0}" task (referencing the "%{0}.yaml" file located at "%{1}").
+      You need to pick only one of them. If your task only relies on a single command,
+      you can opt for "command"; if your rule requires a set of commands, maybe the
+      "commands" field is more suitable.
+    MissingCommandElementsRule: Uh-oh, the "%{0}" task (referencing the "%{0}.yaml"
+      file located at "%{1}") does not have either the "command" or "commands" elements.
+      You need to pick only one of them. If your task only relies on a single command,
+      you can opt for "command"; if your rule requires a set of commands, maybe the
+      "commands" field is more suitable.
+    CommandRuntimeErrorRule: 'I"m sorry, but the command set for the "%{0}" task (referencing
+      the "%{0}.yaml" file located at "%{1}") has an unavailable variable/method in
+      the rule context: "%{2}"'
+    XMLFileNotFound: I"m sorry, but I could not find "%{0}" in the current directory.
+    XMLBadEncoding: I"m sorry, but apparently "%{0}" has a bad encoding. Delete the
+      file and try again.
+    XMLMalformedFile: I"m sorry, but "%{0}" seems to be malformed. Delete the file
       and try again.
-    XMLAccess: I''m sorry, but I could not access ''%{0}''. Please check the directory
+    XMLAccess: I"m sorry, but I could not access "%{0}". Please check the directory
       permissions and try again.
     ConditionalNotBoolean: 'I''m sorry, but the following conditional does not resolve
       to a boolean value. Please rewrite it and try again:'
-    ConditionalRuntimeError: 'I''''m sorry, but one of the conditionals has an unavailable
-      variable in the evaluation context: ''''%{0}'''''
+    ConditionalRuntimeError: 'I"m sorry, but one of the conditionals has an unavailable
+      variable in the evaluation context: "%{0}"'

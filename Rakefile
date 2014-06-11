@@ -2,6 +2,7 @@ require 'bundler/gem_tasks'
 require 'fileutils'
 require 'yaml'
 require 'pp'
+require 'java_properties'
 
 task :default => :build
 
@@ -65,6 +66,42 @@ class LanguageManager
     return v.sort
   end
 
+  def port
+    Dir['arara/translations/*.input'].each{|prop|
+      lang = File.basename(prop, File.extname(prop)).gsub('_', '-').gsub(/^Messages-/, '')
+      lang = 'en' if lang == 'Messages'
+      next if lang == 'Messages.sample'
+      strings = JavaProperties::Properties.new(prop)
+
+      tr = {lang => {}}
+      strings.each{|key, value|
+        section, localkey = *key.to_s.split('_', 2)
+        section.downcase!
+
+        case key
+          when :Log_ProcessingFile, :Msg_NoDirectivesFound, :Error_FileDoesNotExist
+            value.gsub!('{0}', '%{file}')
+          when :Msg_SpecialThanks
+            value.gsub!(/Alan.*Kottwitz/i, '%{contributors}')
+          when :Error_InvalidLanguageConfigurationFile
+            value.gsub!('{0}', '%{languages}')
+        end
+
+        value.gsub!(/(\{[0-9]+\})/){"%#{$1}"}
+        value.gsub!('arara', 'macaw')
+        value.gsub!('Arara', 'Macaw')
+        value.gsub!("''", '"')
+
+        tr[lang][section] ||= {}
+        tr[lang][section][localkey] = value
+      }
+      tr[lang]['help']['Usage'] ||= 'Usage'
+      tr[lang]['help']['Progress'] ||= 'Print dots to mark progress'
+      File.open("lib/macaw/i18n/#{lang}.yml", 'w'){|f| f.write(tr.to_yaml)}
+    }
+  end
+
+
   def test
     @translations.values.each{|l|
       @keys.each{|k|
@@ -87,6 +124,10 @@ class LanguageManager
   end
 end
 
-task :tr do
+task :gettranslations do
+  LanguageManager.new.port
+end
+
+task :checktranslations do
   LanguageManager.new.test
 end
