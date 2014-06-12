@@ -234,7 +234,10 @@ class Macaw
   end
 
   def self.log(line, force=false)
-    print (options.progress && !force ? '.' : line) if @@options.verbose || @@options.progress || force
+    if @@options.verbose || @@options.progress || force
+      print (options.progress && !force ? '.' : line)
+      STDOUT.flush
+    end
     @@log.write(line) if @@log
   end
 
