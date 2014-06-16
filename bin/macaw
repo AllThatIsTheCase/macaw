@@ -78,6 +78,10 @@ def options!
         options[:timeout] = Float(timeout) / 1000
       }
 
+      parser.on('-r', '--rules', 'Available rules') {|v|
+        options[:rules] = v
+      }
+
       parser.on('-v', '--verbose', I18n.t('help.Verbose')) {|v|
         options[:verbose] = v
       }
@@ -148,6 +152,10 @@ class Macaw
   end
   attr_reader :file, :base
 
+  def halt
+    error 'Halted on user request'
+  end
+
   ERRORMODES=[:exit, :throw, :ignore]
   def self.error(msg, onfail=:exit)
     throw "errormode can only be #{ERRORMODES.inspect}" unless ERRORMODES.include?(onfail)
@@ -169,6 +177,34 @@ class Macaw
 
   def self.run
     @@options ||= options!
+
+    if @@options[:rules]
+      vars = Macaw.new('').instance_variables.collect{|v| v.to_s.sub(/^@/, '').intern}
+      w = 0
+      rules = {}
+      self.instance_methods(false).sort{|a, b| a.to_s <=> b.to_s }.each{|method|
+        next if vars.include?(method)
+        w = [w, method.to_s.length].max
+        rules[method.to_s] = self.instance_method(method).parameters.sort{|a, b|
+          a = a.collect{|v| v.to_s}
+          b = b.collect{|v| v.to_s}
+          if a[0] != b[0]
+            a[0] <=> b[0]
+          else
+            b[1] <=> a[1]
+          end
+        }.collect{|p| "#{p[1]}:#{p[0]}"}.join(', ')
+      }
+      rules.each_pair{|method, params|
+        if params.length == 0
+          puts method
+        else
+          puts "#{method.ljust(w, ' ')}: #{params}"
+        end
+      }
+      exit
+    end
+
 
     if ARGV.size == 0 && Dir['*.tex'].size == 1
       puts "No TeX file offered, defaulting to #{Dir['*.tex'][0]}"
@@ -198,8 +234,6 @@ class Macaw
 
       cmd = data[0]
       next if cmd == ''
-
-      error 'Halted on user request' if cmd == 'halt'
 
       params = {}
       begin
