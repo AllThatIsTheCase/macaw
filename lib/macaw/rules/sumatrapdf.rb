@@ -1,9 +1,10 @@
 # sumatrapdf rule for arara
 class Macaw
-  def sumatrapdf
-    Macaw.log('spawning sumatrapdf...')
+  def sumatrapdf(pdf=nil)
+    pdf ||= "#{@base}.pdf"
 
-    pdf = ~"#{@base}.pdf"
+    Macaw.log('spawning sumatrapdf...')
+    pdf = ~pdf
     Process.spawn "sumatrapdf -reuse-instance #{pdf}"
   end
 end
