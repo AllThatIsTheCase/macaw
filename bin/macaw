@@ -178,7 +178,7 @@ class Macaw
   def self.run
     @@options ||= options!
 
-    if @@options[:rules]
+    if @@options.rules
       vars = Macaw.new('').instance_variables.collect{|v| v.to_s.sub(/^@/, '').intern}
       w = 0
       rules = {}
