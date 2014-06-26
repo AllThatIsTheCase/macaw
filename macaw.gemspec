@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'macaw/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "macaw-ruby"
+  spec.name          = "macaw"
   spec.version       = Macaw::VERSION
   spec.executables   << 'macaw'
   spec.authors       = ["Emiliano Heyns"]

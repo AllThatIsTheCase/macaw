@@ -7,12 +7,12 @@ edges at this moment as it was written in a weekend while I was busy doing other
 
 To install, make sure you have Ruby 1.9 or later installed, and then (on a command line, sorry) type
 
-    gem install macaw-ruby
+    gem install macaw
 
 To update Macaw, you type
 
-    gem update macaw-ruby
-    gem cleanup macaw-ruby
+    gem update macaw
+    gem cleanup macaw
 
 ## Usage
 
